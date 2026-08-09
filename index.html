@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hikaru Hosoba - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- フォント -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #fafafa;
+      --card-bg: #ffffff;
+      --text-main: #111111;
+      --text-sub: #666666;
+      --border: #e5e5e5;
+      --border-dark: #111111;
+      --tag-bg: #f4f4f4;
+      --font-en: 'Plus Jakarta Sans', sans-serif;
+      --font-ja: 'Zen Kaku Gothic New', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-en), var(--font-ja);
+      line-height: 1.95;
+      letter-spacing: 0.05em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Header & Nav */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(250, 250, 250, 0.95);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .logo {
+      font-family: var(--font-en);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.15em;
+    }
+
+    /* PC用ナビゲーション */
+    nav ul {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      font-size: 0.85rem;
+      font-family: var(--font-en);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+
+    nav a {
+      color: var(--text-sub);
+      transition: color 0.25s ease;
+    }
+
+    nav a:hover {
+      color: var(--text-main);
+    }
+
+    /* ハンバーガーボタン（デフォルトは非表示） */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      position: relative;
+      z-index: 110;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var(--text-main);
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle span:nth-child(1) { top: 0; }
+    .menu-toggle span:nth-child(2) { top: 9px; }
+    .menu-toggle span:nth-child(3) { top: 18px; }
+
+    /* ハンバーガー開いた時のアイコン変形 */
+    .menu-toggle.active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.active span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1140px;
+      margin: 160px auto 120px;
+      padding: 0 32px;
+    }
+
+    /* Hero Section */
+    .hero {
+      margin-bottom: 120px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-en);
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: 0.04em;
+      line-height: 1.25;
+    }
+
+    .hero p {
+      color: var(--text-sub);
+      font-size: 1rem;
+      max-width: 720px;
+      font-weight: 400;
+      line-height: 2;
+    }
+
+    /* Section Styles */
+    section {
+      margin-bottom: 140px;
+      scroll-margin-top: 120px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 16px;
+    }
+
+    .section-title h2 {
+      font-family: var(--font-en);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .section-title .ja {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      gap: 40px;
+    }
+
+    /* Card Component */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      border-color: var(--border-dark);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.03);
+    }
+
+    /* サムネイル画像設定 */
+    .card-img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      object-position: top;
+      background-color: #f5f5f5;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* チラシ用表裏分割レイアウト */
+    .flyer-split {
+      display: flex;
+      height: 260px;
+      width: 100%;
+      border-bottom: 1px solid var(--border);
+      background-color: #f5f5f5;
+      cursor: pointer;
+    }
+
+    .flyer-split img {
+      width: 50%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    .flyer-split img:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    .card-body {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      background: var(--tag-bg);
+      color: #333333;
+      padding: 4px 10px;
+      border-radius: 2px;
+      font-weight: 500;
+      font-family: var(--font-en);
+      letter-spacing: 0.05em;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+      flex-grow: 1;
+      line-height: 1.75;
+    }
+
+    .card-meta {
+      font-size: 0.82rem;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      margin-top: auto;
+      color: var(--text-sub);
+      line-height: 1.8;
+    }
+
+    .card-meta strong {
+      color: var(--text-main);
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      font-weight: 600;
+      border-bottom: 1px solid var(--text-main);
+      width: fit-content;
+      padding-bottom: 3px;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      cursor: pointer;
+      font-family: var(--font-en), var(--font-ja);
+      letter-spacing: 0.06em;
+      transition: opacity 0.2s;
+    }
+
+    .link-btn:hover {
+      opacity: 0.5;
+    }
+
+    /* Strategy Box */
+    .strategy-box {
+      border: 1px solid var(--border-dark);
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 4px;
+      margin-bottom: 40px;
+    }
+
+    .strategy-box h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 0.06em;
+    }
+
+    .strategy-box p {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      line-height: 1.9;
+    }
+
+    /* 汎用カード内スライダー構造 */
+    .card-slider-container {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      overflow: hidden;
+      background: #f5f5f5;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-slider-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .card-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    /* ONECAGE レイアウト */
+    .onecage-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-dark);
+      border-radius: 4px;
+      overflow: hidden;
+      padding: 40px;
+    }
+
+    .onecage-left-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      border-radius: 2px;
+      background: #f5f5f5;
+    }
+
+    .slider-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      image-rendering: -webkit-optimize-contrast;
+    }
+
+    .slide-caption {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(17, 17, 17, 0.85);
+      color: #ffffff;
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      border-radius: 2px;
+      letter-spacing: 0.08em;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      z-index: 10;
+      color: #111111;
+    }
+
+    .slider-btn:hover {
+      background: #ffffff;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .slider-btn.prev { left: 16px; }
+    .slider-btn.next { right: 16px; }
+
+    .onecage-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .onecage-links.mobile-only {
+      display: none;
+    }
+
+    .onecage-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .onecage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 28px 0;
+      font-size: 0.82rem;
+    }
+
+    .onecage-item {
+      background: #fbfbfb;
+      padding: 16px;
+      border-radius: 2px;
+      border-left: 2px solid var(--border-dark);
+      line-height: 1.8;
+    }
+
+    .onecage-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text-main);
+      font-size: 0.85rem;
+    }
+
+    /* モーダルウィンドウ */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(17, 17, 17, 0.92);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 650px;
+      background: #ffffff;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 1.6rem;
+      background: rgba(0,0,0,0.6);
+      color: #ffffff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
+    .modal-slider-container {
+      position: relative;
+      width: 100%;
+      height: 82vh;
+      max-height: 800px;
+      background: #111111;
+    }
+
+    .modal-slider-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.35s ease;
+    }
+
+    .modal-slide {
+      min-width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    .modal-slide img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 48px;
+      border-top: 1px solid var(--border);
+      color: var(--text-sub);
+      font-size: 0.8rem;
+      font-family: var(--font-en);
+      letter-spacing: 0.08em;
+    }
+
+    /* =========================================================
+       レスポンシブ（スマホ・タブレット表示調整）
+    ========================================================= */
+    @media (max-width: 860px) {
+      .onecage-wrapper {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
+      .onecage-links.pc-only {
+        display: none;
+      }
+      .onecage-links.mobile-only {
+        display: flex;
+        margin-top: 28px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* 1. ヘッダーをハンバーガー化 */
+      .header-inner {
+        padding: 16px 20px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(250, 250, 250, 0.98);
+        border-bottom: 1px solid var(--border);
+        padding: 24px 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+      }
+
+      nav.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      /* メインコンテナの余白調整 */
+      main {
+        margin-top: 100px;
+        padding: 0 20px;
+      }
+
+      .hero {
+        margin-bottom: 80px;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      /* 2. .section-title の flex 解除（縦並びへ） */
+      .section-title {
+        display: block;
+        padding-bottom: 12px;
+        margin-bottom: 32px;
+      }
+
+      .section-title h2 {
+        font-size: 1.5rem;
+        margin-bottom: 4px;
+      }
+
+      .section-title .ja {
+        display: block;
+      }
+
+      /* グリッドレイアウトを1列に */
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .card-body {
+        padding: 24px;
+      }
+
+      /* 3. .onecage-grid をスマホ表示で見やすく1列へ */
+      .onecage-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin: 20px 0;
+      }
+
+      /* 4. 画像のアスペクト比をPCと同じ横長比率（16:9）に調整し切れを低減 */
+      .card-img,
+      .flyer-split,
+      .card-slider-container {
+        height: auto;
+        aspect-ratio: 16 / 9;
+      }
+
+      .slider-container {
+        height: auto;
+        aspect-ratio: 16 / 9;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">HIKARU HOSOBA</div>
+      <!-- ハンバーガーボタン -->
+      <button class="menu-toggle" id="menuToggle" aria-label="メニューを開く">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="#web">Web / LP</a></li>
+          <li><a href="#ec">EC Site</a></li>
+          <li><a href="#project">ONECAGE</a></li>
+          <li><a href="#dx">DX / GAS</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Portfolio.</h1>
+    </section>
+
+    <!-- 1. Webサイト / LP / 販促物 -->
+    <section id="web">
+      <div class="section-title">
+        <h2>01. Web & Graphic</h2>
+        <span class="ja">Webサイト / DTP</span>
+      </div>
+
+      <div class="grid-2">
+        <!-- 繍栄 -->
+        <article class="card">
+          <img src="images/shuei.png" alt="繍栄" class="card-img">
+          <div class="card-body">
+            <div class="card-tags">
+              <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">Figma</span>
+            </div>
+            <h3 class="card-title">株式会社繍栄 民泊サイト</h3>
+            <p class="card-desc">Figmaを用いたUI/UXデザインから、二か国語対応のコーディングまでを一貫して担当。</p>
+            <div class="card-meta">
+              <div><strong>担当領域：</strong>ディレクション / デザイン / フロントエンド</div>
+            </div>
+            <a href="https://shuei-inc.com/inn/jp" target="_blank" rel="noopener" class="link-btn">Visit Website &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 神戸北野ノスタ -->
+        <article class="card">
+          <img src="images/kobekitano.png" alt="神戸北野ノスタ" class="card-img">
+          <div class="card-body">
+            <div class="card-tags">
+              <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">PHP</span><span class="tag">WordPress</span><span class="tag">Illustrator</span>
+            </div>
+            <h3 class="card-title">神戸北野ノスタ 公式Webサイト</h3>
+            <p class="card-desc">施設の世界観を表現するデザイン提案および実装。更新性を考慮したカスタム投稿タイプの導入を設計。</p>
+            <div class="card-meta">
+              <div><strong>担当領域：</strong>ディレクション / デザイン / フロントエンド</div>
+            </div>
+            <a href="https://kobekitano-nosta.jp/" target="_blank" rel="noopener" class="link-btn">Visit Website &rarr;</a>
+          </div>
+        </article>
+
+        <!-- カドマディーゼル -->
+        <article class="card">
+          <img src="images/kadoma.png" alt="門真ディーゼル" class="card-img">
+          <div class="card-body">
+            <div class="card-tags">
+              <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">PHP</span><span class="tag">WordPress</span><span class="tag">Illustrator</span>
+            </div>
+            <h3 class="card-title">カドマディーゼル コーポレートサイト</h3>
+            <p class="card-desc">ヒアリングからデザイン・コーディング、CMS構築まですべて担当。集客につながる動線設計とレスポンシブ化を実現。</p>
+            <div class="card-meta">
+              <div><strong>担当領域：</strong>ディレクション / デザイン / フロントエンド</div>
+            </div>
+            <a href="https://kadoma-d.com/" target="_blank" rel="noopener" class="link-btn">Visit Website &rarr;</a>
+          </div>
+        </article>
+
+        <!-- SYB KOBE -->
+        <article class="card">
+          <img src="images/syb.png" alt="SYB KOBE" class="card-img">
+          <div class="card-body">
+            <div class="card-tags">
+              <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">PHP</span><span class="tag">WordPress</span><span class="tag">Illustrator</span>
+            </div>
+            <h3 class="card-title">SYB KOBE 公式Webサイト</h3>
+            <p class="card-desc">ブランドイメージを打ち出すデザインと、運用性を重視したWordPressカスタマイズを構築。</p>
+            <div class="card-meta">
+              <div><strong>担当領域：</strong>ディレクション / デザイン / フロントエンド</div>
+            </div>
+            <a href="https://syb-kobe.jp/" target="_blank" rel="noopener" class="link-btn">Visit Website &rarr;</a>
+          </div>
+        </article>
+
+        <!-- チラシ① Gスマホ -->
+        <article class="card">
+          <div class="flyer-split" onclick="openFlyerModal('gsp')">
+            <img src="images/flyer_gsp_front.png" alt="Gスマホ チラシ 表面">
+            <img src="images/flyer_gsp_back.png" alt="Gスマホ チラシ 裏面">
+          </div>
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">Illustrator</span><span class="tag">DTPデザイン</span></div>
+            <h3 class="card-title">Gスマホ A4チラシ（表面 / 裏面）</h3>
+            <p class="card-desc">構成案・コピーライティングからデザイン制作までを担当。サービス提案用のチラシを制作。</p>
+            <div class="card-meta">
+              <div><strong>担当領域：</strong>企画構成 / デザイン / 入稿データ作成</div>
+            </div>
+            <button class="link-btn" onclick="openFlyerModal('gsp')">View Flyer &rarr;</button>
+          </div>
+        </article>
+
+        <!-- チラシ② 繍栄 -->
+        <article class="card">
+          <div class="flyer-split" onclick="openFlyerModal('shuei')">
+            <img src="images/flyer_shuei_front.png" alt="繍栄 チラシ 表面">
+            <img src="images/flyer_shuei_back.png" alt="繍栄 チラシ 裏面">
+          </div>
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">Illustrator</span><span class="tag">DTPデザイン</span></div>
+            <h3 class="card-title">繍栄 着付け体験教室 A4チラシ（表面 / 裏面）</h3>
+            <p class="card-desc">構成案・コピーライティングからデザイン制作までを担当。施策と連動させた販促物を制作。</p>
+            <div class="card-meta">
+              <div><strong>担当領域：</strong>企画構成 / デザイン / 入稿データ作成</div>
+            </div>
+            <button class="link-btn" onclick="openFlyerModal('shuei')">View Flyer &rarr;</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2. ECサイト構築・運用・企画 -->
+    <section id="ec">
+      <div class="section-title">
+        <h2>02. EC Business</h2>
+        <span class="ja">ECサイト構築・運用・マーケティング企画</span>
+      </div>
+
+      <div class="strategy-box">
+        <h4>EC事業における思考・取取り組み</h4>
+        <p>「作る」ことにとどまらず、商品企画、売上向上のための施策立案、アクセス分析、運用改善までを一気通貫で担当。マーケティング視点を持った構築・運用を実施。</p>
+      </div>
+
+      <div class="grid-2">
+        <!-- MakeShop EC -->
+        <article class="card">
+          <div class="card-slider-container">
+            <div class="card-slider-track" id="ecMakeShopTrack">
+              <div class="card-slide"><img src="images/ec_makeshop.png" alt="MakeShop EC 1"></div>
+              <div class="card-slide"><img src="images/ec_makeshop_2.png" alt="MakeShop EC 2"></div>
+            </div>
+            <button class="slider-btn prev" onclick="moveCardSlide('ecMakeShopTrack', -1)">&larr;</button>
+            <button class="slider-btn next" onclick="moveCardSlide('ecMakeShopTrack', 1)">&rarr;</button>
+          </div>
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">MakeShop</span><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">販促企画</span></div>
+            <h3 class="card-title">ECサイト 構築・運営（toC）</h3>
+            <p class="card-desc">デザインカスタマイズから商品・カート構築を実施。購入率（CVR）向上に向けた導線設計やキャンペーン企画を定期運用。</p>
+            <div class="card-meta">
+              <div><strong>担当領域：</strong>ディレクション / デザイン / フロントエンド / 販促企画</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- WordPress EC -->
+        <article class="card">
+          <div class="card-slider-container">
+            <div class="card-slider-track" id="ecWpTrack">
+              <div class="card-slide"><img src="images/ec_wordpress.png" alt="WordPress EC 1"></div>
+              <div class="card-slide"><img src="images/ec_wordpress_2.png" alt="WordPress EC 2"></div>
+            </div>
+            <button class="slider-btn prev" onclick="moveCardSlide('ecWpTrack', -1)">&larr;</button>
+            <button class="slider-btn next" onclick="moveCardSlide('ecWpTrack', 1)">&rarr;</button>
+          </div>
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">WordPress</span><span class="tag">PHP</span><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span></div>
+            <h3 class="card-title">ECサイト 企画・開発（toB）</h3>
+            <p class="card-desc">PHPカスタマイズにより、グループ各社の商品を販売するモール型ECサイトを構築。各種マーケティング施策の企画立案・実行まで主導。</p>
+            <div class="card-meta">
+              <div><strong>担当領域：</strong>ディレクション / デザイン / フロントエンド / 販促企画</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. 店舗立ち上げ・事業推進（ONECAGE） -->
+    <section id="project">
+      <div class="section-title">
+        <h2>03. Project Direction</h2>
+        <span class="ja">新規事業立ち上げ・店舗運営</span>
+      </div>
+
+      <div class="onecage-wrapper">
+        <!-- 左側コラム：スライダー＋PC用リンク -->
+        <div class="onecage-left-column">
+          <div class="slider-container">
+            <div class="slider-track" id="sliderTrack">
+              <div class="slide">
+                <img src="images/onecage_exterior.jpg" alt="ONECAGE 外観">
+                <span class="slide-caption">店舗外観デザイン</span>
+              </div>
+              <div class="slide">
+                <img src="images/onecage_interior.jpg" alt="ONECAGE 内装">
+                <span class="slide-caption">内装・空間レイアウト</span>
+              </div>
+            </div>
+            <button class="slider-btn prev" onclick="moveSlide(-1)">&larr;</button>
+            <button class="slider-btn next" onclick="moveSlide(1)">&rarr;</button>
+          </div>
+
+          <!-- PC表示時：スライダー真下に配置するリンク -->
+          <div class="onecage-links pc-only">
+            <a href="https://onecage.jp" target="_blank" rel="noopener" class="link-btn">ONECAGE コーポレートサイト &rarr;</a>
+            <a href="https://onecage.jp/event" target="_blank" rel="noopener" class="link-btn">イベント応募フォーム &rarr;</a>
+          </div>
+        </div>
+
+        <!-- 右側コラム：詳細実績説明 -->
+        <div class="onecage-details">
+          <div class="card-tags">
+            <span class="tag">Creative Direction</span><span class="tag">店舗設営</span><span class="tag">空間デザイン</span><span class="tag">Web/DTP</span><span class="tag">採用・運営</span>
+          </div>
+          <h3 class="card-title" style="font-size: 1.4rem;">新規事業「ONECAGE」立ち上げ〜運営総括</h3>
+          <p class="card-desc" style="margin-bottom: 12px;">役職：クリエイティブディレクター<br>物件選定・内覧対応から店舗内装・外観デザイン、各業者との交渉、各種Web・販促物の制作、スタッフ採用まで、ゼロからの事業立ち上げ全般を一手に統括・推進しました。</p>
+
+          <div class="onecage-grid">
+            <div class="onecage-item">
+              <strong>店舗・空間デザイン</strong>
+              内装・外観デザイン、施工業者交渉、備品調達
+            </div>
+            <div class="onecage-item">
+              <strong>クリエイティブ一式</strong>
+              コーポレートサイト、チラシ制作、SNS動画・画像編集、各種マニュアル
+            </div>
+            <div class="onecage-item">
+              <strong>インフラ・システム</strong>
+              防犯システム見積・導入、予約管理システム構築、問い合わせ対応
+            </div>
+            <div class="onecage-item">
+              <strong>店舗運営・マネジメント</strong>
+              スタッフ面接・契約〜稼働サポート、イベント企画・当日の現地進行管理
+            </div>
+          </div>
+
+          <!-- スマホ表示時のみここに配置されるリンク -->
+          <div class="onecage-links mobile-only">
+            <a href="https://onecage.jp" target="_blank" rel="noopener" class="link-btn">ONECAGE コーポレートサイト &rarr;</a>
+            <a href="https://onecage.jp/event" target="_blank" rel="noopener" class="link-btn">イベント応募フォーム &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 業務改善ツール開発・IT推進（GAS・AI） -->
+    <section id="dx">
+      <div class="section-title">
+        <h2>04. Internal DX & GAS</h2>
+        <span class="ja">業務改善ツール開発・全社DX/AI推進</span>
+      </div>
+
+      <div class="grid-2">
+        <!-- 業務改善ツール 1 -->
+        <article class="card">
+          <img src="images/dx_app.png" alt="アンケート＆ダッシュボード発行アプリ" class="card-img">
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">Google Apps Script</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div>
+            <h3 class="card-title">アンケートフォーム＆ダッシュボード発行アプリ</h3>
+            <p class="card-desc">GASとJavaScriptを用いて、アンケート発行〜結果可視化ダッシュボードを自動生成するWebアプリを開発。集計業務工数を大幅削減。</p>
+            <div class="card-meta">
+              <div><strong>成果：</strong>集計作業を100%自動化</div>
+              <div><strong>担当領域：</strong>提案 / 要件定義 / 画面設計 / フロントエンド実装・GAS</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 業務改善ツール 2 -->
+        <article class="card">
+          <img src="images/dx_ai.png" alt="AI活用推進" class="card-img">
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">Google Apps Script</span><span class="tag">JavaScript</span><span class="tag">プロジェクト推進</span></div>
+            <h3 class="card-title">グループ横断 AI活用推進プロジェクト</h3>
+            <p class="card-desc">5,000名規模の従業員へAI活用アンケートや外部連携ウェビナー、AIコンテストなどを企画・実施し、全社のDX/AI活用を牽引。さらに、施策に必要なツールをWebアプリにて構築。</p>
+            <div class="card-meta">
+              <div><strong>規模・効果：</strong>グループ全社（約5,000名）への配信・研修実施</div>
+              <div><strong>担当領域：</strong>企画 / システム実装 / 外部交渉 / 運営</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- チラシ拡大用モーダル -->
+  <div class="modal-overlay" id="flyerModal" onclick="closeFlyerModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeFlyerModal(event)">&times;</button>
+      <div class="modal-slider-container">
+        <div class="modal-slider-track" id="modalSliderTrack">
+          <div class="modal-slide">
+            <img id="modalImgFront" src="" alt="チラシ 表面 拡大">
+          </div>
+          <div class="modal-slide">
+            <img id="modalImgBack" src="" alt="チラシ 裏面 拡大">
+          </div>
+        </div>
+        <button class="slider-btn prev" onclick="moveModalSlide(-1)">&larr;</button>
+        <button class="slider-btn next" onclick="moveModalSlide(1)">&rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Hikaru Hosoba. All Rights Reserved.</p>
+  </footer>
+
+  <!-- スクリプト -->
+  <script>
+    /* ハンバーガーメニュー制御 */
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = navMenu.querySelectorAll('a');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    // メニュー項目クリック時にメニューを閉じる
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+
+    /* チラシ画像データリスト */
+    const flyerData = {
+      gsp: {
+        front: "images/flyer_gsp_front.png",
+        back: "images/flyer_gsp_back.png"
+      },
+      shuei: {
+        front: "images/flyer_shuei_front.png",
+        back: "images/flyer_shuei_back.png"
+      }
+    };
+
+    /* ONECAGE用スライダー */
+    let currentSlide = 0;
+    function moveSlide(direction) {
+      const track = document.getElementById('sliderTrack');
+      const totalSlides = track.children.length;
+      currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    /* EC等のカード内スライダー（汎用） */
+    const cardSlideStates = {};
+    function moveCardSlide(trackId, direction) {
+      if (!(trackId in cardSlideStates)) {
+        cardSlideStates[trackId] = 0;
+      }
+      const track = document.getElementById(trackId);
+      const totalSlides = track.children.length;
+      cardSlideStates[trackId] = (cardSlideStates[trackId] + direction + totalSlides) % totalSlides;
+      track.style.transform = `translateX(-${cardSlideStates[trackId] * 100}%)`;
+    }
+
+    /* チラシモーダル制御 */
+    let modalSlideIndex = 0;
+    function openFlyerModal(type) {
+      if (flyerData[type]) {
+        document.getElementById('modalImgFront').src = flyerData[type].front;
+        document.getElementById('modalImgBack').src = flyerData[type].back;
+      }
+      document.getElementById('flyerModal').classList.add('active');
+      modalSlideIndex = 0;
+      updateModalSlide();
+    }
+
+    function closeFlyerModal(event) {
+      document.getElementById('flyerModal').classList.remove('active');
+    }
+
+    function moveModalSlide(direction) {
+      const track = document.getElementById('modalSliderTrack');
+      const totalSlides = track.children.length;
+      modalSlideIndex = (modalSlideIndex + direction + totalSlides) % totalSlides;
+      updateModalSlide();
+    }
+
+    function updateModalSlide() {
+      const track = document.getElementById('modalSliderTrack');
+      track.style.transform = `translateX(-${modalSlideIndex * 100}%)`;
+    }
+  </script>
+</body>
+</html>
