@@ -708,6 +708,47 @@
         aspect-ratio: 16 / 9;
       }
     }
+    /* =========================================================
+   　JSアニメーション用CSSクラス
+    ========================================================= */
+    /* フェードイン表示（初期状態：非表示＋下にずらす） */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    
+    /* 画面内に入った時に付与するクラス */
+    .fade-in-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* カードのホバー時に画像をスムーズに拡大 */
+    .card-img, .card-slider-container {
+      transition: transform 0.5s ease;
+    }
+    
+    .card:hover .card-img {
+      transform: scale(1.03);
+    }
+    
+    /* タイピング演出用のカーソル */
+    .typing-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background-color: var(--text-main);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 0.8s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -723,10 +764,10 @@
       </button>
       <nav id="navMenu">
         <ul>
+          <li><a href="#dx">DX / GAS</a></li>
           <li><a href="#web">Web / DTP</a></li>
           <li><a href="#ec">EC Site</a></li>
           <li><a href="#project">Project</a></li>
-          <li><a href="#dx">DX / GAS</a></li>
         </ul>
       </nav>
     </div>
@@ -735,35 +776,73 @@
   <main>
     <!-- Hero Section -->
     <section class="hero">
-      <h1>Portfolio.</h1>
+      <h1 id="heroTitle">Portfolio<span class="typing-cursor"></span></h1>
+      <p class="fade-in-up">Web Directing × DX / Automation. テクノロジーとロジックで事業と組織の課題を解決します。</p>
     </section>
 
-    <!-- 1. Webサイト / DTP -->
-    <section id="web">
+    <!-- 1. 業務改善ツール開発・IT推進（GAS・AI） -->
+    <section id="dx">
       <div class="section-title">
-        <h2>01. Web & DTP Design</h2>
-        <span class="ja">Webサイト / DTP</span>
+        <h2>01. Internal DX & GAS</h2>
+        <span class="ja">業務改善ツール開発・全社DX/AI推進</span>
       </div>
 
       <div class="grid-2">
-        <!-- 繍栄 -->
-        <article class="card">
-          <img src="images/shuei.png" alt="繍栄" class="card-img">
+        <!-- 業務改善ツール 1 -->
+        <article class="card fade-in-up">
+          <img src="images/dx_app.png" alt="アンケート＆ダッシュボード発行アプリ" class="card-img">
           <div class="card-body">
-            <div class="card-tags">
-              <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">Figma</span>
-            </div>
-            <h3 class="card-title">株式会社繍栄 民泊施設 紹介ページ</h3>
-            <p class="card-desc">施設内の紹介を目的としたページを制作。Figmaを用いたUI/UXデザインから、二か国語対応のコーディングまでを一貫して担当。</p>
+            <div class="card-tags"><span class="tag">Google Apps Script</span><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span></div>
+            <h3 class="card-title">アンケートフォーム＆ダッシュボード発行アプリ</h3>
+            <p class="card-desc">GASとJavaScriptを用いて、アンケート発行〜結果可視化ダッシュボードを自動生成するWebアプリを開発。集計業務工数を大幅削減。</p>
             <div class="card-meta">
-              <div><strong>担当領域：</strong>ディレクション / デザイン / フロントエンド</div>
+              <div><strong>成果：</strong>集計作業を100%自動化</div>
+              <div><strong>担当領域：</strong>提案 / 要件定義 / 画面設計 / フロントエンド実装・GAS</div>
             </div>
-            <a href="https://shuei-inc.com/inn/jp" target="_blank" rel="noopener" class="link-btn">Visit Website &rarr;</a>
           </div>
         </article>
 
+        <!-- 業務改善ツール 2 -->
+        <article class="card fade-in-up">
+          <img src="images/dx_ai.png" alt="AI活用推進" class="card-img">
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">Google Apps Script</span><span class="tag">JavaScript</span><span class="tag">プロジェクト推進</span></div>
+            <h3 class="card-title">グループ横断 AI活用推進プロジェクト</h3>
+            <p class="card-desc">5,000名規模の従業員へAI活用アンケートや外部連携ウェビナー、AIコンテストなどを企画・実施し、全社のDX/AI活用を牽引。さらに、施策に必要なツールをWebアプリにて構築。</p>
+            <div class="card-meta">
+              <div><strong>成果：</strong>半期でAI活用率20%上昇</div>
+              <div><strong>担当領域：</strong>企画 / システム実装 / 外部交渉 / 運営</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2. Webサイト / DTP -->
+    <section id="web">
+      <div class="section-title">
+        <h2>02. Web & DTP Design</h2>
+        <span class="ja">Webサイト / DTP</span>
+      </div>
+
+        <!-- SYB KOBE -->
+        <article class="card fade-in-up">
+          <img src="images/syb.png" alt="SYB KOBE" class="card-img">
+          <div class="card-body">
+            <div class="card-tags">
+              <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">PHP</span><span class="tag">WordPress</span><span class="tag">Illustrator</span>
+            </div>
+            <h3 class="card-title">SYB KOBE ティザーサイト</h3>
+            <p class="card-desc">ブランドイメージを打ち出すデザインと、運用性を重視したWordPressカスタマイズを構築。</p>
+            <div class="card-meta">
+              <div><strong>担当領域：</strong>ディレクション / デザイン / フロントエンド</div>
+            </div>
+            <a href="https://syb-kobe.jp/" target="_blank" rel="noopener" class="link-btn">Visit Website &rarr;</a>
+          </div>
+        </article>
+      
         <!-- 神戸北野ノスタ -->
-        <article class="card">
+        <article class="card fade-in-up">
           <img src="images/kobekitano.png" alt="神戸北野ノスタ" class="card-img">
           <div class="card-body">
             <div class="card-tags">
@@ -778,8 +857,25 @@
           </div>
         </article>
 
+      <div class="grid-2">
+        <!-- 繍栄 -->
+        <article class="card fade-in-up">
+          <img src="images/shuei.png" alt="繍栄" class="card-img">
+          <div class="card-body">
+            <div class="card-tags">
+              <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">Figma</span>
+            </div>
+            <h3 class="card-title">株式会社繍栄 民泊施設 紹介ページ</h3>
+            <p class="card-desc">施設内の紹介を目的としたページを制作。Figmaを用いたUI/UXデザインから、二か国語対応のコーディングまでを一貫して担当。</p>
+            <div class="card-meta">
+              <div><strong>担当領域：</strong>ディレクション / デザイン / フロントエンド</div>
+            </div>
+            <a href="https://shuei-inc.com/inn/jp" target="_blank" rel="noopener" class="link-btn">Visit Website &rarr;</a>
+          </div>
+        </article>
+
         <!-- カドマディーゼル -->
-        <article class="card">
+        <article class="card fade-in-up">
           <img src="images/kadoma.png" alt="門真ディーゼル" class="card-img">
           <div class="card-body">
             <div class="card-tags">
@@ -794,24 +890,9 @@
           </div>
         </article>
 
-        <!-- SYB KOBE -->
-        <article class="card">
-          <img src="images/syb.png" alt="SYB KOBE" class="card-img">
-          <div class="card-body">
-            <div class="card-tags">
-              <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">PHP</span><span class="tag">WordPress</span><span class="tag">Illustrator</span>
-            </div>
-            <h3 class="card-title">SYB KOBE ティザーサイト</h3>
-            <p class="card-desc">ブランドイメージを打ち出すデザインと、運用性を重視したWordPressカスタマイズを構築。</p>
-            <div class="card-meta">
-              <div><strong>担当領域：</strong>ディレクション / デザイン / フロントエンド</div>
-            </div>
-            <a href="https://syb-kobe.jp/" target="_blank" rel="noopener" class="link-btn">Visit Website &rarr;</a>
-          </div>
-        </article>
 
         <!-- チラシ① Gスマホ -->
-        <article class="card">
+        <article class="card fade-in-up">
           <div class="flyer-split" onclick="openFlyerModal('gsp')">
             <img src="images/flyer_gsp_front.png" alt="Gスマホ チラシ 表面">
             <img src="images/flyer_gsp_back.png" alt="Gスマホ チラシ 裏面">
@@ -828,7 +909,7 @@
         </article>
 
         <!-- チラシ② 繍栄 -->
-        <article class="card">
+        <article class="card fade-in-up">
           <div class="flyer-split" onclick="openFlyerModal('shuei')">
             <img src="images/flyer_shuei_front.png" alt="繍栄 チラシ 表面">
             <img src="images/flyer_shuei_back.png" alt="繍栄 チラシ 裏面">
@@ -846,21 +927,21 @@
       </div>
     </section>
 
-    <!-- 2. ECサイト構築・運用・企画 -->
+    <!-- 3. ECサイト構築・運用・企画 -->
     <section id="ec">
       <div class="section-title">
-        <h2>02. EC Business</h2>
+        <h2>03. EC Business</h2>
         <span class="ja">ECサイト構築・運用・マーケティング企画</span>
       </div>
 
-      <div class="strategy-box">
+      <div class="strategy-box fade-in-up">
         <h4>EC事業における思考・取り組み</h4>
         <p>プロジェクトリーダーとして、ECサイトの新規立ち上げ提案からサイト構築、商品企画、売上向上のための施策立案、アクセス分析、運用改善までを一気通貫で担当。「作る」ことにとどまらず、マーケティング視点を持った構築・運用を実施。</p>
       </div>
 
       <div class="grid-2">
         <!-- MakeShop EC -->
-        <article class="card">
+        <article class="card fade-in-up">
           <div class="card-slider-container">
             <div class="card-slider-track" id="ecMakeShopTrack">
               <div class="card-slide"><img src="images/ec_makeshop.png" alt="MakeShop EC 1"></div>
@@ -880,7 +961,7 @@
         </article>
 
         <!-- WordPress EC -->
-        <article class="card">
+        <article class="card fade-in-up">
           <div class="card-slider-container">
             <div class="card-slider-track" id="ecWpTrack">
               <div class="card-slide"><img src="images/ec_wordpress.png" alt="WordPress EC 1"></div>
@@ -901,14 +982,14 @@
       </div>
     </section>
 
-    <!-- 3. 店舗立ち上げ・事業推進（ONECAGE） -->
+    <!-- 4. 店舗立ち上げ・事業推進（ONECAGE） -->
     <section id="project">
       <div class="section-title">
-        <h2>03. Project Direction</h2>
+        <h2>04. Project Direction</h2>
         <span class="ja">新規事業立ち上げ・店舗運営</span>
       </div>
 
-      <div class="onecage-wrapper">
+      <div class="onecage-wrapper fade-in-up">
         <!-- 左側コラム：スライダー＋PC用リンク -->
         <div class="onecage-left-column">
           <div class="slider-container">
@@ -969,43 +1050,6 @@
       </div>
     </section>
 
-    <!-- 4. 業務改善ツール開発・IT推進（GAS・AI） -->
-    <section id="dx">
-      <div class="section-title">
-        <h2>04. Internal DX & GAS</h2>
-        <span class="ja">業務改善ツール開発・全社DX/AI推進</span>
-      </div>
-
-      <div class="grid-2">
-        <!-- 業務改善ツール 1 -->
-        <article class="card">
-          <img src="images/dx_app.png" alt="アンケート＆ダッシュボード発行アプリ" class="card-img">
-          <div class="card-body">
-            <div class="card-tags"><span class="tag">Google Apps Script</span><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span></div>
-            <h3 class="card-title">アンケートフォーム＆ダッシュボード発行アプリ</h3>
-            <p class="card-desc">GASとJavaScriptを用いて、アンケート発行〜結果可視化ダッシュボードを自動生成するWebアプリを開発。集計業務工数を大幅削減。</p>
-            <div class="card-meta">
-              <div><strong>成果：</strong>集計作業を100%自動化</div>
-              <div><strong>担当領域：</strong>提案 / 要件定義 / 画面設計 / フロントエンド実装・GAS</div>
-            </div>
-          </div>
-        </article>
-
-        <!-- 業務改善ツール 2 -->
-        <article class="card">
-          <img src="images/dx_ai.png" alt="AI活用推進" class="card-img">
-          <div class="card-body">
-            <div class="card-tags"><span class="tag">Google Apps Script</span><span class="tag">JavaScript</span><span class="tag">プロジェクト推進</span></div>
-            <h3 class="card-title">グループ横断 AI活用推進プロジェクト</h3>
-            <p class="card-desc">5,000名規模の従業員へAI活用アンケートや外部連携ウェビナー、AIコンテストなどを企画・実施し、全社のDX/AI活用を牽引。さらに、施策に必要なツールをWebアプリにて構築。</p>
-            <div class="card-meta">
-              <div><strong>成果：</strong>半期でAI活用率20%上昇</div>
-              <div><strong>担当領域：</strong>企画 / システム実装 / 外部交渉 / 運営</div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
 
   </main>
 
