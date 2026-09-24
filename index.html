@@ -233,7 +233,8 @@
       cursor: pointer;
     }
 
-    .flyer-split img {
+    .flyer-split img,
+    .flyer-noimage {
       width: 50%;
       height: 100%;
       object-fit: cover;
@@ -242,6 +243,21 @@
 
     .flyer-split img:first-child {
       border-right: 1px solid var(--border);
+    }
+
+    /* 片面チラシ用の NO IMAGE 領域スタイル */
+    .flyer-noimage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eeeeee;
+      color: var(--text-sub);
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      border-left: 1px solid var(--border);
+      user-select: none;
     }
 
     .card-body {
@@ -709,9 +725,8 @@
       }
     }
     /* =========================================================
-   　JSアニメーション用CSSクラス
+       JSアニメーション用CSSクラス
     ========================================================= */
-    /* フェードイン表示（初期状態：非表示＋下にずらす） */
     .fade-in-up {
       opacity: 0;
       transform: translateY(30px);
@@ -719,13 +734,11 @@
       will-change: opacity, transform;
     }
     
-    /* 画面内に入った時に付与するクラス */
     .fade-in-up.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
     
-    /* カードのホバー時に画像をスムーズに拡大 */
     .card-img, .card-slider-container {
       transition: transform 0.5s ease;
     }
@@ -734,7 +747,6 @@
       transform: scale(1.03);
     }
     
-    /* タイピング演出用のカーソル */
     .typing-cursor {
       display: inline-block;
       width: 2px;
@@ -768,7 +780,6 @@
           <li><a href="#ec">EC Site</a></li>
           <li><a href="#web">Web / DTP</a></li>
           <li><a href="#dx">DX / GAS</a></li>
-
         </ul>
       </nav>
     </div>
@@ -781,7 +792,6 @@
       <p class="fade-in-up">Web Directing & Project Management.</p>
     </section>
 
-    
     <!-- 1. 店舗立ち上げ・事業推進（ONECAGE） -->
     <section id="project">
       <div class="section-title">
@@ -977,10 +987,11 @@
           </div>
         </article>
 
-        <!-- チラシ① BASEBALL LABO -->
+        <!-- チラシ① BASEBALL LABO（片面） -->
         <article class="card fade-in-up">
           <div class="flyer-split" onclick="openFlyerModal('baseball')">
             <img src="images/flyer_baseball_front.png" alt="BASEBALLLABO チラシ 表面">
+            <div class="flyer-noimage">NO IMAGE</div>
           </div>
           <div class="card-body">
             <div class="card-tags"><span class="tag">Illustrator</span><span class="tag">DTPデザイン</span></div>
@@ -993,7 +1004,7 @@
           </div>
         </article>
 
-        <!-- チラシ② 繍栄 -->
+        <!-- チラシ② 繍栄（両面） -->
         <article class="card fade-in-up">
           <div class="flyer-split" onclick="openFlyerModal('shuei')">
             <img src="images/flyer_shuei_front.png" alt="繍栄 チラシ 表面">
@@ -1012,7 +1023,7 @@
       </div>
     </section>
 
-        <!-- 4. 業務改善ツール開発・IT推進（GAS・AI） -->
+    <!-- 4. 業務改善ツール開発・IT推進（GAS・AI） -->
     <section id="dx">
       <div class="section-title">
         <h2>04. Internal DX & GAS</h2>
@@ -1050,7 +1061,6 @@
       </div>
     </section>
 
-
   </main>
 
   <!-- チラシ拡大用モーダル -->
@@ -1062,12 +1072,12 @@
           <div class="modal-slide">
             <img id="modalImgFront" src="" alt="チラシ 表面 拡大">
           </div>
-          <div class="modal-slide">
+          <div class="modal-slide" id="modalSlideBack">
             <img id="modalImgBack" src="" alt="チラシ 裏面 拡大">
           </div>
         </div>
-        <button class="slider-btn prev" onclick="moveModalSlide(-1)">&larr;</button>
-        <button class="slider-btn next" onclick="moveModalSlide(1)">&rarr;</button>
+        <button class="slider-btn prev" id="modalPrevBtn" onclick="moveModalSlide(-1)">&larr;</button>
+        <button class="slider-btn next" id="modalNextBtn" onclick="moveModalSlide(1)">&rarr;</button>
       </div>
     </div>
   </div>
@@ -1099,7 +1109,7 @@
     /* チラシ画像データリスト */
     const flyerData = {
       baseball: {
-        front: "images/flyer_baseball_front.png",
+        front: "images/flyer_baseball_front.png"
       },
       shuei: {
         front: "images/flyer_shuei_front.png",
@@ -1131,9 +1141,25 @@
     /* チラシモーダル制御 */
     let modalSlideIndex = 0;
     function openFlyerModal(type) {
-      if (flyerData[type]) {
-        document.getElementById('modalImgFront').src = flyerData[type].front;
-        document.getElementById('modalImgBack').src = flyerData[type].back;
+      const data = flyerData[type];
+      const prevBtn = document.getElementById('modalPrevBtn');
+      const nextBtn = document.getElementById('modalNextBtn');
+      const slideBack = document.getElementById('modalSlideBack');
+
+      if (data) {
+        document.getElementById('modalImgFront').src = data.front;
+
+        if (data.back) {
+          document.getElementById('modalImgBack').src = data.back;
+          slideBack.style.display = 'flex';
+          prevBtn.style.display = 'flex';
+          nextBtn.style.display = 'flex';
+        } else {
+          document.getElementById('modalImgBack').src = '';
+          slideBack.style.display = 'none';
+          prevBtn.style.display = 'none';
+          nextBtn.style.display = 'none';
+        }
       }
       document.getElementById('flyerModal').classList.add('active');
       modalSlideIndex = 0;
@@ -1146,8 +1172,11 @@
 
     function moveModalSlide(direction) {
       const track = document.getElementById('modalSliderTrack');
-      const totalSlides = track.children.length;
-      modalSlideIndex = (modalSlideIndex + direction + totalSlides) % totalSlides;
+      // 表示状態にあるスライドのみカウント
+      const visibleSlides = Array.from(track.children).filter(slide => slide.style.display !== 'none');
+      if (visibleSlides.length <= 1) return; // 片面の場合は動作させない
+
+      modalSlideIndex = (modalSlideIndex + direction + visibleSlides.length) % visibleSlides.length;
       updateModalSlide();
     }
 
@@ -1166,32 +1195,30 @@
       
       const observerOptions = {
         root: null,
-        rootMargin: '0px 0px -80px 0px', // 画面下に80px入ったら発火
+        rootMargin: '0px 0px -80px 0px',
         threshold: 0.1
       };
     
       const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry, index) => {
           if (entry.isIntersecting) {
-            // カードごとに少しだけ発火時間をズラす（時間差フェードイン）
             setTimeout(() => {
               entry.target.classList.add('is-visible');
             }, (index % 2) * 150);
             
-            observer.unobserve(entry.target); // 一度表示されたら監視解除（パフォーマンス最適化）
+            observer.unobserve(entry.target);
           }
         });
       }, observerOptions);
     
       fadeElements.forEach(el => observer.observe(el));
     
-    
-      // 2. ヒーローセクションのタイピング演出（純粋JS制御）
+      // 2. ヒーローセクションのタイピング演出
       const heroTitle = document.getElementById('heroTitle');
       if (heroTitle) {
         const text = "Portfolio.";
         const cursor = heroTitle.querySelector('.typing-cursor');
-        heroTitle.textContent = ""; // 一旦リセット
+        heroTitle.textContent = "";
         heroTitle.appendChild(cursor);
     
         let charIndex = 0;
@@ -1200,10 +1227,10 @@
             const char = document.createTextNode(text.charAt(charIndex));
             heroTitle.insertBefore(char, cursor);
             charIndex++;
-            setTimeout(typeEffect, 120); // 打鍵速度
+            setTimeout(typeEffect, 120);
           }
         }
-        setTimeout(typeEffect, 300); // ページ読み込み後の開始遅延
+        setTimeout(typeEffect, 300);
       }
     
     });
