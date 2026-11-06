@@ -81,6 +81,7 @@
       scrollbar-width: none;
       -ms-overflow-style: none;
       padding: 10px 0 30px;
+      -webkit-overflow-scrolling: touch;
     }
 
     .works-slider-track::-webkit-scrollbar {
@@ -189,34 +190,6 @@
       color: #FFFFFF;
     }
 
-    /* Works 横スライダートラック（ドラッグ操作対応） */
-    .works-slider-track {
-      display: flex;
-      gap: 28px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      padding: 10px 0 30px;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    .works-slider-track::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* ドラッグ中のカーソル状態・テキスト選択防止 */
-    .works-slider-track.is-dragging {
-      scroll-snap-type: none; /* ドラッグ中はスナップの引っかかりを一時解除 */
-    }
-
-    /* ドラッグ中にカード内の画像や文字が選択されてしまわないようにガード */
-    .works-slide-item img {
-      pointer-events: none;
-      user-select: none;
-    }
-
     /* About Preview */
     .about-preview-grid {
       display: grid;
@@ -320,7 +293,7 @@
       }
 
       .works-slide-item {
-        flex: 0 0 82vw; /* スマホ画面の8割強を使って大きく見せる */
+        flex: 0 0 82vw;
         aspect-ratio: 16 / 10;
         height: auto;
       }
@@ -402,9 +375,9 @@
             </a>
 
             <!-- 02. 神戸北野ノスタ -->
-            <a href="works/kobekitano.html" class="works-slide-item zoom-on-hover">
+            <a href="works/kitano-nosta.html" class="works-slide-item zoom-on-hover">
               <div class="works-slide-thumb">
-                <img src="images/kobekitano-mv.jpg" alt="神戸北野ノスタ 公式Webサイト" loading="lazy">
+                <img src="images/nosta-mv.jpg" alt="神戸北野ノスタ 公式Webサイト" loading="lazy">
               </div>
               <div class="works-slide-overlay">
                 <span class="works-slide-tag">Web Design / Coding</span>
@@ -519,72 +492,25 @@
   <script src="js/main.js"></script>
 
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const track = document.getElementById('worksSliderTrack');
-    const prevBtn = document.getElementById('worksPrevBtn');
-    const nextBtn = document.getElementById('worksNextBtn');
+    document.addEventListener('DOMContentLoaded', () => {
+      const track = document.getElementById('worksSliderTrack');
+      const prevBtn = document.getElementById('worksPrevBtn');
+      const nextBtn = document.getElementById('worksNextBtn');
 
-    if (!track) return;
+      if (!track) return;
 
-    // --- 既存の矢印ボタンスクロール ---
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        track.scrollBy({ left: -528, behavior: 'smooth' });
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        track.scrollBy({ left: 528, behavior: 'smooth' });
-      });
-    }
-
-    // --- マウスドラッグ（スワイプ）操作 ---
-    let isDown = false;
-    let startX = 0;
-    let scrollLeft = 0;
-    let isDraggingMotion = false; // ドラッグ移動があったか判定するフラグ
-
-    track.addEventListener('mousedown', (e) => {
-      isDown = true;
-      isDraggingMotion = false;
-      track.classList.add('is-dragging');
-      startX = e.pageX - track.offsetLeft;
-      scrollLeft = track.scrollLeft;
-    });
-
-    window.addEventListener('mouseup', () => {
-      if (!isDown) return;
-      isDown = false;
-      track.classList.remove('is-dragging');
-      // マウスを離した瞬間に少し待ってからドラッグフラグをリセット
-      setTimeout(() => {
-        isDraggingMotion = false;
-      }, 50);
-    });
-
-    track.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - track.offsetLeft;
-      const walk = (x - startX) * 1.5; // 移動速度倍率（1.5倍で軽快に動く）
-
-      // 5px以上動いたら「ドラッグ操作」とみなす
-      if (Math.abs(x - startX) > 5) {
-        isDraggingMotion = true;
+      // 矢印ボタンをクリックしたときの快適なスクロール（カード幅500px + gap28px = 528px 移動）
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          track.scrollBy({ left: -528, behavior: 'smooth' });
+        });
       }
-
-      track.scrollLeft = scrollLeft - walk;
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          track.scrollBy({ left: 528, behavior: 'smooth' });
+        });
+      }
     });
-
-    // ドラッグした時に誤ってリンク先ページへ飛んでしまうのを防止
-    track.querySelectorAll('.works-slide-item').forEach((card) => {
-      card.addEventListener('click', (e) => {
-        if (isDraggingMotion) {
-          e.preventDefault(); // ドラッグ移動した場合はリンク遷移をキャンセル
-        }
-      });
-    });
-  });
-</script>
+  </script>
 </body>
 </html>

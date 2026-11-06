@@ -650,3 +650,21 @@ footer {
     box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.1);
   }
 }
+/* 1. スマホ・タッチ端末で左上に残るカスタムカーソルを完全非表示 */
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
+/* 2. スマホ表示で「CONTACT」の背景巨大文字がはみ出さないよう字間とサイズを調整 */
+@media (max-width: 768px) {
+  .contact-large-bg-title {
+    font-size: clamp(2.4rem, 11vw, 3.6rem); 
+    letter-spacing: 0.18em; 
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: clip;
+  }
+}
