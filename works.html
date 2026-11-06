@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Works — ホソバヒカルのポートフォリオ</title>
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="images/favicons/favicon.png">
+  <link rel="apple-touch-icon" href="images/favicons/apple-touch-icon.png">
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .works-header-area {
+      padding-top: 140px;
+    }
+
+    /* フィルタータブ */
+    .filter-tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 36px;
+      margin-bottom: 64px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+
+    .filter-tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      font-family: var(--font-en);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      padding: 0 0 8px;
+      position: relative;
+      transition: var(--transition);
+      text-transform: uppercase;
+    }
+
+    .filter-tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -17px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--text-main);
+      transition: var(--transition);
+    }
+
+    .filter-tab-btn:hover,
+    .filter-tab-btn.active {
+      color: var(--text-main);
+    }
+
+    .filter-tab-btn.active::after {
+      width: 100%;
+    }
+
+    /* 作品ギャラリー */
+    .works-grid-layout {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 72px 48px;
+    }
+
+    .work-card-item {
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .work-card-item.is-hidden {
+      display: none;
+    }
+
+    .work-card-item:hover {
+      transform: translateY(-6px);
+    }
+
+    .work-image-box {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 0;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background-color: var(--bg-gray);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
+    }
+
+    .work-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.6s var(--ease-modern);
+    }
+
+    .work-card-item:hover .work-image-box img {
+      transform: scale(1.03);
+    }
+
+    .work-category-name {
+      font-family: var(--font-en);
+      font-size: 0.8rem;
+      color: var(--text-light);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .work-item-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--text-main);
+      letter-spacing: 0.02em;
+    }
+
+    /* 複合大型プロジェクト基本設定 */
+    .work-card-item.is-featured-project {
+      grid-column: 1 / -1;
+      padding-top: 40px;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+    }
+
+    /* 2つ目以降のプロジェクトの上に境界線 */
+    .work-card-item.is-featured-project ~ .work-card-item.is-featured-project {
+      border-top: 1px solid var(--border-color);
+      padding-top: 64px;
+      margin-top: 24px;
+    }
+
+    .featured-project-inner {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .featured-project-inner .work-image-box {
+      margin-bottom: 0;
+      aspect-ratio: 16 / 9;
+    }
+
+    .featured-desc-text {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      line-height: 1.9;
+      margin: 14px 0 20px;
+    }
+
+    .featured-role-tag {
+      display: inline-block;
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      color: var(--accent-vivid);
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 860px) {
+      .works-grid-layout {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .work-card-item.is-featured-project {
+        padding-top: 24px;
+        padding-bottom: 24px;
+      }
+      .work-card-item.is-featured-project ~ .work-card-item.is-featured-project {
+        padding-top: 48px;
+        margin-top: 16px;
+      }
+      .featured-project-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="custom-cursor"></div>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">HIKARU HOSOBA<span>.</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="メニュー開閉">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="works.html" style="color: var(--text-main);">Works</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section-block bg-white works-header-area">
+      <div class="section-container">
+        
+        <div class="section-head fade-in-up">
+          <div>
+            <p class="section-sub-title">デザインしたもの。</p>
+            <h1 class="section-main-title">Works</h1>
+          </div>
+        </div>
+
+        <!-- カテゴリーフィルタータブ -->
+        <div class="filter-tab-bar fade-in-up">
+          <button class="filter-tab-btn active" data-filter="all">All</button>
+          <button class="filter-tab-btn" data-filter="web">Web Site</button>
+          <button class="filter-tab-btn" data-filter="lp">Landing Page</button>
+          <button class="filter-tab-btn" data-filter="project">Project</button>
+        </div>
+
+        <!-- 作品一覧ギャラリー -->
+        <div class="works-grid-layout">
+
+          <!-- =================== 1. Webサイト（4件） =================== -->
+          <!-- 01. ONECAGE 公式サイト -->
+          <a href="works/onecage.html" class="work-card-item zoom-on-hover fade-in-up" data-category="web">
+            <div class="work-image-box">
+              <img src="images/onecage-mv.jpg" alt="室内野球練習場 ONECAGE 公式サイト" loading="lazy">
+            </div>
+            <span class="work-category-name">Web Site</span>
+            <h2 class="work-item-title">ONECAGE 公式サイト</h2>
+          </a>
+
+          <!-- 02. SUPER YACHT BASE KOBE -->
+          <a href="works/syb-kobe.html" class="work-card-item zoom-on-hover fade-in-up" data-category="web">
+            <div class="work-image-box">
+              <img src="images/syb-kobe-mv.jpg" alt="SUPER YACHT BASE KOBE 公式サイト" loading="lazy">
+            </div>
+            <span class="work-category-name">Web Site</span>
+            <h2 class="work-item-title">SUPER YACHT BASE KOBE 公式サイト</h2>
+          </a>
+
+          <!-- 03. 繍栄 -->
+          <a href="works/shuei.html" class="work-card-item zoom-on-hover fade-in-up" data-category="web">
+            <div class="work-image-box">
+              <img src="images/shuei-mv.jpg" alt="繍栄（SHUEI）公式ブランドサイト" loading="lazy">
+            </div>
+            <span class="work-category-name">Web Site</span>
+            <h2 class="work-item-title">繍栄（SHUEI）公式ブランドサイト</h2>
+          </a>
+
+          <!-- 04. 神戸北野ノスタ -->
+          <a href="works/kobekitano.html" class="work-card-item zoom-on-hover fade-in-up" data-category="web">
+            <div class="work-image-box">
+              <img src="images/kobekitano-mv.jpg" alt="神戸北野ノスタ 公式サイト" loading="lazy">
+            </div>
+            <span class="work-category-name">Web Site</span>
+            <h2 class="work-item-title">神戸北野ノスタ 公式サイト</h2>
+          </a>
+
+          <!-- =================== 2. ランディングページ（4件） =================== -->
+          <!-- 05. BASEBALL LABO ランディングページ -->
+          <a href="works/baseball-labo.html" class="work-card-item zoom-on-hover fade-in-up" data-category="lp">
+            <div class="work-image-box">
+              <img src="images/labo-mv.jpg" alt="BASEBALL LABO ランディングページ" loading="lazy">
+            </div>
+            <span class="work-category-name">Landing Page</span>
+            <h2 class="work-item-title">BASEBALL LABO ランディングページ</h2>
+          </a>
+
+          <!-- 06. スズキ新春初売り ランディングページ -->
+          <a href="works/suzuki-campaign.html" class="work-card-item zoom-on-hover fade-in-up" data-category="lp">
+            <div class="work-image-box">
+              <img src="images/suzuki-mv.jpg" alt="スズキ新春初売り キャンペーンページ" loading="lazy">
+            </div>
+            <span class="work-category-name">Landing Page / Campaign</span>
+            <h2 class="work-item-title">スズキ新春初売り キャンペーンページ</h2>
+          </a>
+
+          <!-- 07. fior fiore グループ割引 ランディングページ -->
+          <a href="works/fiorfiore.html" class="work-card-item zoom-on-hover fade-in-up" data-category="lp">
+            <div class="work-image-box">
+              <img src="images/fiorfiore-mv.jpg" alt="fior fiore グループ割引特設ページ" loading="lazy">
+            </div>
+            <span class="work-category-name">Landing Page / Promotion</span>
+            <h2 class="work-item-title">fior fiore グループ割引特設ページ</h2>
+          </a>
+
+          <!-- 08. SUPER YACHT BASE KOBE ティザー -->
+          <a href="works/syb-teaser.html" class="work-card-item zoom-on-hover fade-in-up" data-category="lp">
+            <div class="work-image-box">
+              <img src="images/syb-teaser-mv.jpg" alt="SUPER YACHT BASE KOBE ブランドティザーページ" loading="lazy">
+            </div>
+            <span class="work-category-name">Landing Page / Teaser</span>
+            <h2 class="work-item-title">SUPER YACHT BASE KOBE ブランドティザーページ</h2>
+          </a>
+
+          <!-- =================== 3. プロジェクト（2件） =================== -->
+          <!-- 09. ECサイト プロジェクト -->
+          <a href="works/ec-project.html" class="work-card-item is-featured-project zoom-on-hover fade-in-up" data-category="project">
+            <div class="featured-project-inner">
+              <div class="work-image-box">
+                <img src="images/ec-project-mv.jpg" alt="ECサイト企画・開発プロジェクト" loading="lazy">
+              </div>
+              <div>
+                <span class="featured-role-tag">Project Leader</span>
+                <span class="work-category-name" style="display: block;">Project / EC Platform</span>
+                <h2 class="work-item-title" style="font-size: 1.45rem;">ECサイト企画・開発プロジェクト</h2>
+                <p class="featured-desc-text">
+                  プロジェクトリーダーとして、新規立ち上げ提案からサイト構築、商品企画、売上向上のための施策立案、アクセス分析、運用改善までを一気通貫で主導。マーケティング視点を持った構築・運用を実施。
+                </p>
+                <span class="btn-link" style="font-size: 0.9rem;">View Case Study &rarr;</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 10. ONECAGE 総合クリエイティブディレクション -->
+          <a href="works/onecage-branding.html" class="work-card-item is-featured-project zoom-on-hover fade-in-up" data-category="project">
+            <div class="featured-project-inner">
+              <div class="work-image-box">
+                <img src="images/onecage-branding-mv.jpg" alt="ONECAGE 総合クリエイティブ" loading="lazy">
+              </div>
+              <div>
+                <span class="featured-role-tag">Creative Director</span>
+                <span class="work-category-name" style="display: block;">Project / Total Branding</span>
+                <h2 class="work-item-title" style="font-size: 1.45rem;">ONECAGE 総合クリエイティブ</h2>
+                <p class="featured-desc-text">
+                  新規事業のクリエイティブディレクターとして、内装・外観デザインからチラシ・名刺などの紙媒体制作、SNS動画・画像編集までブランドに関わる全クリエイティブを担当。イベント企画や施工業者との折衝も対応。
+                </p>
+                <span class="btn-link" style="font-size: 0.9rem;">View Case Study &rarr;</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 全ページ共通 Contact Section -->
+    <section id="contact" class="contact-section fade-in-up">
+      <div class="section-container">
+        <p class="contact-thanks-msg">ご覧いただきありがとうございます。</p>
+        <div class="contact-large-bg-title">C O N T A C T</div>
+        <p class="contact-sub-text">お仕事のご相談やお問合せは、下記のメールアドレスよりお気軽にご連絡ください。</p>
+        <a href="#" id="contactBtn" class="contact-email-btn zoom-on-hover">
+          <span id="emailText"></span> <span class="arrow">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Hikaru Hosoba. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const filterBtns = document.querySelectorAll('.filter-tab-btn');
+      const workCards = document.querySelectorAll('.work-card-item');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filterValue = btn.getAttribute('data-filter');
+
+          workCards.forEach(card => {
+            const cardCategories = card.getAttribute('data-category').split(' ');
+
+            if (filterValue === 'all' || cardCategories.includes(filterValue)) {
+              card.classList.remove('is-hidden');
+            } else {
+              card.classList.add('is-hidden');
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

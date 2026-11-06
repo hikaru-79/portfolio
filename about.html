@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>About — ホソバヒカルのポートフォリオ</title>
+  <!-- 公式開発者アイコン Devicon（cdnjs版） -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/devicon/2.16.0/devicon.min.css">
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="images/favicons/favicon.png">
+  <link rel="apple-touch-icon" href="images/favicons/apple-touch-icon.png">
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* 1. Profile Area */
+    .about-top-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .about-photo-frame {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 0;
+      overflow: hidden;
+      background-color: var(--bg-gray);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.04);
+    }
+
+    .about-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.6s var(--ease-modern);
+    }
+
+    .about-photo-frame:hover img {
+      transform: scale(1.03);
+    }
+
+    .about-lead-tag {
+      font-family: var(--font-en);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: var(--accent-vivid);
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .about-name-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
+
+    .about-bio-text p {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      line-height: 2.1;
+      margin-bottom: 16px;
+    }
+
+    /* ---------------------------------------------------------
+       2. Philosophy 
+    --------------------------------------------------------- */
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .philosophy-card {
+      background: #FFFFFF;
+      padding: 40px 32px;
+      border-radius: 0;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .philosophy-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+    .philosophy-num {
+      font-family: var(--font-hand);
+      font-size: 2.2rem;
+      color: var(--accent-vivid);
+      line-height: 1;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .philosophy-graphic {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .philosophy-graphic svg {
+      width: 100%;
+      height: 100%;
+      stroke: var(--accent-vivid);
+      stroke-width: 1.5;
+      fill: none;
+      transition: var(--transition);
+    }
+
+    .philosophy-card:hover .philosophy-graphic svg {
+      transform: scale(1.05);
+    }
+
+    .philosophy-card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .philosophy-card-desc {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      line-height: 1.95;
+    }
+
+    /* ---------------------------------------------------------
+       3. Skills
+    --------------------------------------------------------- */
+    .skill-sec-block {
+      margin-bottom: 48px;
+    }
+
+    .skill-sec-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .skill-sec-head {
+      font-family: var(--font-en);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .skills-minimal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 20px;
+    }
+
+    .skill-minimal-card {
+      background: #FFFFFF;
+      aspect-ratio: 1 / 1;
+      border-radius: 0;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: var(--transition);
+    }
+
+    .skill-minimal-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-vivid);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+    }
+
+    .skill-minimal-card i {
+      font-size: 2.4rem;
+      color: var(--text-main);
+      transition: var(--transition);
+    }
+
+    .skill-minimal-card:hover i {
+      color: var(--accent-vivid);
+    }
+
+    .skill-label-text {
+      font-family: var(--font-en);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* ---------------------------------------------------------
+       4. Personal Likes 
+    --------------------------------------------------------- */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+    }
+
+    .interest-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .like-photo-wrap {
+      width: 100%;
+      height: 180px;
+      border-radius: 0;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-color);
+    }
+
+    .like-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s var(--ease-modern);
+    }
+
+    .interest-item:hover .like-photo-wrap img {
+      transform: scale(1.04);
+    }
+
+    .interest-content {
+      border-top: 1px solid var(--text-main);
+      padding-top: 20px;
+    }
+
+    .interest-label {
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      color: var(--accent-vivid);
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .interest-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .interest-desc {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      line-height: 1.9;
+    }
+
+    @media (max-width: 860px) {
+      .about-top-grid, .philosophy-grid, .interests-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .about-photo-frame {
+        max-width: 260px;
+        margin: 0 auto;
+      }
+      .skills-minimal-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ビビッドピンクカーソル -->
+  <div class="custom-cursor"></div>
+
+  <!-- ヘッダー -->
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">HIKARU HOSOBA<span>.</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="メニュー開閉">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" style="color: var(--text-main);">About</a></li>
+          <li><a href="works.html">Works</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main style="max-width: 100%; padding: 0;">
+    <!-- 1. Biography (白背景) -->
+    <section class="section-block bg-white fade-in-up" style="padding-top: 140px;">
+      <div class="section-container">
+        <div class="section-head">
+          <div>
+            <p class="section-sub-title">わたしのこと。</p>
+            <h1 class="section-main-title">About Me</h1>
+          </div>
+        </div>
+
+        <div class="about-top-grid">
+          <div class="about-photo-frame zoom-on-hover">
+            <img src="images/about-profile.jpg" alt="細羽 妃佳留 ポートレート写真">
+          </div>
+
+          <div class="about-bio-content">
+            <span class="about-lead-tag">HIKARU HOSOBA</span>
+            <h2 class="about-name-title">細羽 妃佳留</h2>
+
+            <div class="about-bio-text">
+              <p>
+                1992年生まれ。兵庫県神戸市出身。<br>
+                高校3年生のときに妊娠・出産。現在は、アイドルを目指す高校生（長男）と毎日遊んで暮らしたい中学生（次男）の3人でにぎやかに暮らしています。<br><br>
+                「一度きりの人生、好きなことを仕事にしたい！」という思いで、営業事務として勤めていた会社を2022年に退社。5ヶ月間スクールに通い、Webデザイナーへと転身しました。<br>
+                現職では、Webデザインだけでなく、ECサイトの企画・開発や新規事業のブランディングまで幅広く経験。見た目の美しさだけでなく、ユーザーがわくわくするようなデザインを心がけています。<br><br>
+                趣味は音楽、ライブ、プロ野球観戦。頑張っている人たちを応援することが好き！
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Philosophy (面分けライトグレー背景) -->
+    <section class="section-block bg-gray fade-in-up">
+      <div class="section-container">
+        <div class="section-head">
+          <div>
+            <p class="section-sub-title">大切にしていること。</p>
+            <h2 class="section-main-title">Philosophy</h2>
+          </div>
+        </div>
+
+        <div class="philosophy-grid">
+          <!-- 01. 多角的な視点と根拠 -->
+          <div class="philosophy-card">
+            <span class="philosophy-num">01.</span>
+            <div class="philosophy-graphic">
+              <svg viewBox="0 0 200 100">
+                <rect x="20" y="20" width="55" height="55" />
+                <circle cx="100" cy="50" r="30" />
+                <polygon points="175,20 145,75 205,75" />
+              </svg>
+            </div>
+            <h3 class="philosophy-card-title">多角的な視点と根拠</h3>
+            <p class="philosophy-card-desc">
+              見た目の美しさだけでなく、「誰がどう使うか」「ユーザーの興味を惹くには」を考えます。クライアントの意図とユーザー体験の両立を追求します。
+            </p>
+          </div>
+
+          <!-- 02. 課題に向き合うデザイン思考 -->
+          <div class="philosophy-card">
+            <span class="philosophy-num">02.</span>
+            <div class="philosophy-graphic">
+              <svg viewBox="0 0 200 100">
+                <rect x="25" y="15" width="150" height="70" />
+                <line x1="25" y1="50" x2="175" y2="50" />
+                <line x1="100" y1="15" x2="100" y2="85" />
+                <line x1="62" y1="15" x2="62" y2="85" />
+                <line x1="138" y1="15" x2="138" y2="85" />
+                <circle cx="100" cy="50" r="22" />
+              </svg>
+            </div>
+            <h3 class="philosophy-card-title">課題に向き合うデザイン思考</h3>
+            <p class="philosophy-card-desc">
+              何が一番の課題なのかを見つけ出し、「どうすれば解決できるか」を考え、アイデアを形にします。ただ作るだけでなく、課題の発見から解決まで粘り強くやりきります。
+            </p>
+          </div>
+
+          <!-- 03. 変化を楽しむ探究心 -->
+          <div class="philosophy-card">
+            <span class="philosophy-num">03.</span>
+            <div class="philosophy-graphic">
+              <svg viewBox="0 0 200 100">
+                <path d="M 35,55 C 25,38 45,20 75,28 C 95,10 135,10 155,28 C 185,18 195,48 175,68 C 195,88 155,98 125,82 C 95,98 55,88 35,55 Z" />
+              </svg>
+            </div>
+            <h3 class="philosophy-card-title">変化を楽しむ探究心</h3>
+            <p class="philosophy-card-desc">
+              トレンドや新しいものにアンテナを張り、Web制作にも活かしています。プライベートの趣味の時間もインプットにつながっています。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Skills (白背景) -->
+    <section class="section-block bg-white fade-in-up">
+      <div class="section-container">
+        <div class="section-head">
+          <div>
+            <p class="section-sub-title">できること。</p>
+            <h2 class="section-main-title">Skills & Tools</h2>
+          </div>
+        </div>
+
+        <!-- DESIGN -->
+        <div class="skill-sec-block">
+          <div class="skill-sec-head">
+            <span>DESIGN & CREATIVE</span>
+            <span style="font-size: 0.8rem; color: var(--text-light); font-weight: 400;">Figma & Adobe Tools</span>
+          </div>
+          <div class="skills-minimal-grid">
+            <div class="skill-minimal-card">
+              <i class="devicon-figma-plain"></i>
+              <span class="skill-label-text">Figma</span>
+            </div>
+            <div class="skill-minimal-card">
+              <i class="devicon-photoshop-plain"></i>
+              <span class="skill-label-text">Photoshop</span>
+            </div>
+            <div class="skill-minimal-card">
+              <i class="devicon-illustrator-plain"></i>
+              <span class="skill-label-text">Illustrator</span>
+            </div>
+            <div class="skill-minimal-card">
+              <i class="devicon-xd-plain"></i>
+              <span class="skill-label-text">Adobe XD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CODING -->
+        <div class="skill-sec-block">
+          <div class="skill-sec-head">
+            <span>DEVELOPMENT & CODING</span>
+            <span style="font-size: 0.8rem; color: var(--text-light); font-weight: 400;">Responsive & CMS</span>
+          </div>
+          <div class="skills-minimal-grid">
+            <div class="skill-minimal-card">
+              <i class="devicon-html5-plain"></i>
+              <span class="skill-label-text">HTML</span>
+            </div>
+            <div class="skill-minimal-card">
+              <i class="devicon-css3-plain"></i>
+              <span class="skill-label-text">CSS</span>
+            </div>
+            <div class="skill-minimal-card">
+              <i class="devicon-javascript-plain"></i>
+              <span class="skill-label-text">JavaScript</span>
+            </div>
+            <div class="skill-minimal-card">
+              <i class="devicon-php-plain"></i>
+              <span class="skill-label-text">PHP</span>
+            </div>
+            <div class="skill-minimal-card">
+              <i class="devicon-wordpress-plain"></i>
+              <span class="skill-label-text">WordPress</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Personal Likes -->
+    <section class="section-block bg-gray fade-in-up">
+      <div class="section-container">
+        <div class="section-head">
+          <div>
+            <p class="section-sub-title">好きなこと。</p>
+            <h2 class="section-main-title">Personal Likes</h2>
+          </div>
+        </div>
+
+        <div class="interests-grid">
+          <!-- 1. 野球観戦 -->
+          <div class="interest-item">
+            <div class="like-photo-wrap zoom-on-hover">
+              <img src="images/like-baseball.jpg" alt="プロ野球観戦 スタジアム写真" loading="lazy">
+            </div>
+            <div class="interest-content">
+              <p class="interest-label">01. SPORTS</p>
+              <h3 class="interest-title">プロ野球観戦</h3>
+              <p class="interest-desc">選手たちが活躍する姿を見て元気をチャージしています。打った瞬間も、ピンチを乗り切った回も、息子たちと一緒に大はしゃぎ！</p>
+            </div>
+          </div>
+
+          <!-- 2. 音楽・フェス -->
+          <div class="interest-item">
+            <div class="like-photo-wrap zoom-on-hover">
+              <img src="images/like-music.jpg" alt="音楽・ライブ フェス写真" loading="lazy">
+            </div>
+            <div class="interest-content">
+              <p class="interest-label">02. MUSIC</p>
+              <h3 class="interest-title">音楽・ライブ</h3>
+              <p class="interest-desc">アイドルからバンドまで、好きな音楽を全身で感じられるライブが大好き！歌やダンスを見ることが1番の趣味◎</p>
+            </div>
+          </div>
+
+          <!-- 3. 美味しいもの -->
+          <div class="interest-item">
+            <div class="like-photo-wrap zoom-on-hover">
+              <img src="images/like-food.jpg" alt="美味しいものを食べる グルメ写真" loading="lazy">
+            </div>
+            <div class="interest-content">
+              <p class="interest-label">03. FOOD</p>
+              <h3 class="interest-title">美味しいものを食べる</h3>
+              <p class="interest-desc">お気に入りのお店を開拓することが休日の楽しみ。美味しいごはん屋さんも、パン屋さん巡りも、私のリフレッシュタイム。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section fade-in-up">
+      <div class="section-container">
+        <p class="contact-thanks-msg">ご覧いただきありがとうございます。</p>
+        
+        <div class="contact-large-bg-title">C O N T A C T</div>
+        
+        <p class="contact-sub-text">お仕事のご相談やお問い合わせは、下記のメールアドレスよりお気軽にご連絡ください。</p>
+        
+        <a href="#" id="contactBtn" class="contact-email-btn zoom-on-hover">
+          <span id="emailText"></span> <span class="arrow">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Hikaru Hosoba. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

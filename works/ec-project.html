@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ECサイト企画・開発プロジェクト — Works Detail | ホソバヒカルのポートフォリオ</title>
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="../images/favicons/favicon.png">
+  <link rel="apple-touch-icon" href="../images/favicons/apple-touch-icon.png">
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* =========================================================
+       キャンペーン特集：1枚スライド ＋ モーダル展開スタイル
+    ========================================================= */
+    .slider-showcase-container {
+      max-width: 840px;
+      margin: 48px auto 0;
+      position: relative;
+    }
+
+    /* スライド表示枠 */
+    .slider-main-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: var(--bg-gray);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .slide-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide-item.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ファーストビュー画像 */
+    .slide-img-box {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.4s ease;
+      display: block;
+    }
+
+    .slider-main-stage:hover .slide-img-box img {
+      transform: scale(1.02);
+    }
+
+    /* 「クリックして全体を見る」オーバーレイバッジ */
+    .slide-click-hint {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(28, 29, 31, 0.85);
+      color: #FFFFFF;
+      font-family: var(--font-en);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      padding: 8px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(4px);
+      z-index: 5;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .slide-click-hint span {
+      color: var(--accent-vivid);
+    }
+
+    .slider-main-stage:hover .slide-click-hint {
+      background: var(--accent-vivid);
+      color: #FFFFFF;
+    }
+
+    .slider-main-stage:hover .slide-click-hint span {
+      color: #FFFFFF;
+    }
+
+    /* スライダー操作バー */
+    .slider-ctrl-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 24px;
+      padding: 0 4px;
+      gap: 32px;
+    }
+
+    .slider-info-text {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .slider-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    /* 右側操作系ブロック */
+    .slider-ctrl-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: 20px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .slide-arrow-btn {
+      width: 40px;
+      height: 40px;
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--text-main);
+      cursor: none;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .slide-arrow-btn:hover {
+      background: var(--text-main);
+      color: #FFFFFF;
+      border-color: var(--text-main);
+    }
+
+    .slider-pagination-count {
+      font-family: var(--font-en);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+      min-width: 58px;
+      justify-content: center;
+    }
+
+    .slider-pagination-count .current-num {
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    /* =========================================================
+       縦長スクロールモーダル（ホイール固定・背面ロック仕様）
+    ========================================================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      cursor: none;
+      touch-action: none;
+    }
+
+    .modal-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-scroll-window {
+      position: relative;
+      max-width: 600px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: scroll; /* スクロール可能であることをブラウザに明示 */
+      background: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      overscroll-behavior: contain; /* スクロールが親に伝播するのを防ぐ */
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-scroll-window img {
+      width: 100%;
+      height: auto;
+      display: block;
+      pointer-events: none; /* 画像ドラッグによる誤作動を防止 */
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      background: rgba(28, 29, 31, 0.85);
+      color: #FFFFFF;
+      border: none;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: none;
+      z-index: 10000;
+      transition: var(--transition);
+    }
+
+    .modal-close-btn:hover {
+      background: var(--accent-vivid);
+    }
+
+    @media (max-width: 768px) {
+      .slider-main-stage {
+        aspect-ratio: 16 / 11;
+      }
+      .slider-ctrl-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .slider-ctrl-right {
+        margin-left: 0;
+        align-self: flex-end;
+      }
+      .modal-overlay {
+        padding: 20px 10px;
+      }
+      .modal-close-btn {
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ビビッドピンクカスタムカーソル -->
+  <div class="custom-cursor"></div>
+
+  <!-- ヘッダー -->
+  <header>
+    <div class="header-inner">
+      <a href="../index.html" class="logo">HIKARU HOSOBA<span>.</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="メニュー開閉">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../works.html" style="color: var(--text-main);">Works</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. 最上部：モックアップ全面 ＋ 右側にタイトル重ね表示 -->
+    <div class="detail-hero-full-wrap">
+      <div class="detail-hero-overlay-text fv-photo-slow-fade">
+        <span class="detail-overlay-sub">EC Platform Project</span>
+        <h1 class="detail-overlay-title">ECサイト<br>企画・開発プロジェクト</h1>
+      </div>
+
+      <div class="detail-mv-full-bg fv-photo-slow-fade">
+        <img src="../images/ec-project-mv.jpg" alt="ECサイト企画・開発プロジェクト メインモックアップ">
+      </div>
+    </div>
+
+    <!-- 2. 制作概要 Outline (面分けライトグレー背景) -->
+    <section class="section-block bg-gray outline-section fade-in-up">
+      <div class="section-container">
+        <div class="section-head">
+          <div>
+            <p class="section-sub-title">プロジェクト概要</p>
+            <h2 class="section-main-title">Outline</h2>
+          </div>
+        </div>
+
+        <p class="outline-item-body" style="font-size: 1.08rem; margin-bottom: 48px;">
+          プロジェクトリーダーとして、toB向けECサイトの立ち上げから、グループ顧客向けのモール型ECサイトの構築、商品企画・特集ページの制作、アクセス解析に基づく運用改善まで担当。「作る」ことにとどまらず、マーケティング視点を持った構築・運用を実施しました。
+        </p>
+
+        <div class="outline-item-block">
+          <p class="outline-item-head">Target</p>
+          <p class="outline-item-body">
+            【toB】 グループ法人の各拠点・店舗スタッフ（ノベルティやお茶菓子、手土産などに活用）<br>
+            【toC】 スイーツ・食品・ギフトなど、上質な季節商品やこだわり商品を求める顧客
+          </p>
+        </div>
+
+        <div class="outline-item-block">
+          <p class="outline-item-head">Period & Role</p>
+          <p class="outline-item-body">
+            toB：Makeshop（HTML / CSS / JavaScript）<br>
+            toC：WordPress（HTML / CSS / JavaScript / PHP）<br>
+            担当領域：立ち上げ提案 / デザイン / 開発（MakeShop・WordPress） / 特集企画・商品提案 / 特集ページデザイン・コーディング
+          </p>
+        </div>
+
+        <div class="outline-item-block">
+          <p class="outline-item-head">Purpose</p>
+          <p class="outline-item-body">
+            【toB】 社内発注フローのデジタル化による業務効率化<br>
+            【toC】 季節ごとの魅力的な特集展開と会員限定施策によるリピート率・客単価・売上向上
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 特集ページ実績スライダー ＆ モーダル閲覧 (白背景) -->
+    <section class="section-block bg-white fade-in-up">
+      <div class="section-container">
+        <div class="section-head">
+          <div>
+            <p class="section-sub-title">販促・特集企画</p>
+            <h2 class="section-main-title">Campaign Pages</h2>
+          </div>
+        </div>
+
+        <!-- スライダーコンテナ -->
+        <div class="slider-showcase-container">
+
+          <div class="slider-main-stage zoom-on-hover" id="sliderStage">
+            
+            <!-- スライド 01: 夏のおとも -->
+            <div class="slide-item is-active" 
+                 data-title="「夏のおとも、どれにする？」おとなのご褒美特集" 
+                 data-concept="涼を感じるスイーツとドリンクを厳選。爽やかな格子グリッドと手書き風レタリングで夏の涼味とご褒美感を演出。"
+                 data-full-img="../images/campaign-summer.png">
+              <div class="slide-img-box">
+                <img src="../images/campaign-summer.png" alt="夏のおとも、どれにする？ ファーストビュー">
+              </div>
+            </div>
+
+            <!-- スライド 02: 和の涼味 頂上決戦 -->
+            <div class="slide-item" 
+                 data-title="「和の涼味 頂上決戦」あなたの推しはどっち？" 
+                 data-concept="「もっちり ぷるん」VS「とろ〜り なめらか」。オノマトペを押し出した対決構図でユーザーの選ぶ楽しさと購買意欲を刺激。"
+                 data-full-img="../images/campaign-vs.png">
+              <div class="slide-img-box">
+                <img src="../images/campaign-vs.png" alt="和の涼味 頂上決戦 ファーストビュー">
+              </div>
+            </div>
+
+            <!-- スライド 03: tsumami selection -->
+            <div class="slide-item" 
+                 data-title="「今夜のつまみは、&ldquo;和&rdquo;にしよう」夏の晩酌特集" 
+                 data-concept="ビールのシズル感と和の手描きイラストを融合。帰省や晩酌の特別なひとときを想起させる親しみやすいトーン設計。"
+                 data-full-img="../images/campaign-tsumami.png">
+              <div class="slide-img-box">
+                <img src="../images/campaign-tsumami.png" alt="tsumami selection ファーストビュー">
+              </div>
+            </div>
+
+            <!-- スライド 04: Autumn Selection -->
+            <div class="slide-item" 
+                 data-title="「秋の贅沢、ぎゅっと詰め込みました」季節の紅茶とジャム特集" 
+                 data-concept="深まる秋の温もりをシックなブラウンと落ち葉のモチーフで表現。贅沢なティータイムを届ける落ち着いたトーン＆マナー。"
+                 data-full-img="../images/campaign-autumn.png">
+              <div class="slide-img-box">
+                <img src="../images/campaign-autumn.png" alt="Autumn Selection ファーストビュー">
+              </div>
+            </div>
+
+            <!-- スライド 05: 冬のショコラティー -->
+            <div class="slide-item" 
+                 data-title="「この季節にしか出会えない特別な香りと味わい」ショコラギフト特集" 
+                 data-concept="ホワイトチョコレートのレリーフと濃厚なブラウンで冬の特別感を演出。限定ペアリングギフトの魅力を引き立てる上質デザイン。"
+                 data-full-img="../images/campaign-chocolat.png">
+              <div class="slide-img-box">
+                <img src="../images/campaign-chocolat.png" alt="冬のショコラティー＆ギフト ファーストビュー">
+              </div>
+            </div>
+
+            <!-- オーバーレイ案内バッジ -->
+            <div class="slide-click-hint">
+              <span>↗</span> Expand Full Page
+            </div>
+          </div>
+
+          <!-- コントロールバー -->
+          <div class="slider-ctrl-bar">
+            <div class="slider-info-text">
+              <h4 class="slider-title" id="currentSlideTitle">「夏のおとも、どれにする？」おとなのご褒美特集</h4>
+              <p class="slider-concept-text" id="currentSlideConcept" style="font-size: 0.9rem; color: var(--text-sub); line-height: 1.7;">
+                涼を感じるスイーツとドリンクを厳選。爽やかな格子グリッドと手書き風レタリングで夏の涼味とご褒美感を演出。
+              </p>
+            </div>
+            
+            <div class="slider-ctrl-right">
+              <button class="slide-arrow-btn zoom-on-hover" id="prevSlideBtn" aria-label="前のスライド">&larr;</button>
+
+              <div class="slider-pagination-count">
+                <span class="current-num" id="currentSlideNum">01</span>
+                <span>/</span>
+                <span id="totalSlideNum">05</span>
+              </div>
+
+              <button class="slide-arrow-btn zoom-on-hover" id="nextSlideBtn" aria-label="次のスライド">&rarr;</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ページ下部ナビゲーション -->
+        <div class="detail-footer-nav">
+          <a href="../works.html" class="btn-link">&larr; Back to Works</a>
+          <span style="font-size: 0.85rem; color: var(--text-light); font-family: var(--font-en);">Archive / Screenshot Only</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 全ページ共通 Contact Section -->
+    <section id="contact" class="contact-section fade-in-up">
+      <div class="section-container">
+        <p class="contact-thanks-msg">ご覧いただきありがとうございます。</p>
+        <div class="contact-large-bg-title">C O N T A C T</div>
+        <p class="contact-sub-text">お仕事のご相談やお問合せは、下記のメールアドレスよりお気軽にご連絡ください。</p>
+        <a href="#" id="contactBtn" class="contact-email-btn zoom-on-hover">
+          <span id="emailText"></span> <span class="arrow">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 縦長スクロールモーダル-->
+  <div class="modal-overlay" id="lpModal" data-lenis-prevent>
+    <button class="modal-close-btn zoom-on-hover" id="modalCloseBtn" aria-label="閉じる">&times;</button>
+    <div class="modal-scroll-window" id="modalWindow" data-lenis-prevent>
+      <img id="modalImg" src="" alt="Campaign Full Page">
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Hikaru Hosoba. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="../js/main.js"></script>
+
+  <!-- スライダー ＆ モーダル連動スクリプト -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.slide-item');
+      const prevBtn = document.getElementById('prevSlideBtn');
+      const nextBtn = document.getElementById('nextSlideBtn');
+      const titleEl = document.getElementById('currentSlideTitle');
+      const conceptEl = document.getElementById('currentSlideConcept');
+      const currentNumEl = document.getElementById('currentSlideNum');
+      const totalNumEl = document.getElementById('totalSlideNum');
+      const stage = document.getElementById('sliderStage');
+
+      const modal = document.getElementById('lpModal');
+      const modalClose = document.getElementById('modalCloseBtn');
+      const modalImg = document.getElementById('modalImg');
+      const modalWindow = document.getElementById('modalWindow');
+
+      let currentIndex = 0;
+
+      if (totalNumEl) {
+        totalNumEl.textContent = String(slides.length).padStart(2, '0');
+      }
+
+      function updateSlide(index) {
+        slides.forEach((s, i) => {
+          s.classList.toggle('is-active', i === index);
+        });
+        const activeSlide = slides[index];
+        if (titleEl && activeSlide.dataset.title) {
+          titleEl.textContent = activeSlide.dataset.title;
+        }
+        if (conceptEl && activeSlide.dataset.concept) {
+          conceptEl.textContent = activeSlide.dataset.concept;
+        }
+        if (currentNumEl) {
+          currentNumEl.textContent = String(index + 1).padStart(2, '0');
+        }
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+          updateSlide(currentIndex);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          currentIndex = (currentIndex + 1) % slides.length;
+          updateSlide(currentIndex);
+        });
+      }
+
+      // モーダルを開く処理
+      if (stage) {
+        stage.addEventListener('click', () => {
+          const activeSlide = slides[currentIndex];
+          const fullImgSrc = activeSlide.dataset.fullImg;
+          if (fullImgSrc && modalImg) {
+            modalImg.src = fullImgSrc;
+          }
+          if (modal && modalWindow) {
+            modal.classList.add('is-open');
+            modalWindow.scrollTop = 0;
+            document.body.style.overflow = 'hidden';
+
+            // Lenisのスクロールを一時停止
+            if (window.lenis && typeof window.lenis.stop === 'function') {
+              window.lenis.stop();
+            }
+          }
+        });
+      }
+
+      // モーダルを閉じる処理
+      function closeModal() {
+        if (modal) {
+          modal.classList.remove('is-open');
+          document.body.style.overflow = '';
+
+          // Lenisのスクロールを再開
+          if (window.lenis && typeof window.lenis.start === 'function') {
+            window.lenis.start();
+          }
+        }
+      }
+
+      if (modalClose) {
+        modalClose.addEventListener('click', closeModal);
+      }
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) {
+          closeModal();
+        }
+      });
+
+      // モーダル内でのホイールスクロールを確実に動作させる処理
+      if (modalWindow) {
+        modalWindow.addEventListener('wheel', (e) => {
+          e.stopPropagation();
+          modalWindow.scrollTop += e.deltaY;
+        }, { passive: false });
+      }
+    });
+  </script>
+</body>
+</html>

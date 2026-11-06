@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ONECAGE 総合クリエイティブ — Works Detail | ホソバヒカルのポートフォリオ</title>
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="../images/favicons/favicon.png">
+  <link rel="apple-touch-icon" href="../images/favicons/apple-touch-icon.png">
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* =========================================================
+       ONECAGE トータルブランディング専用レイアウト
+    ========================================================= */
+    .branding-scope-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .branding-scope-section:last-of-type {
+      border-bottom: none;
+    }
+
+    .scope-head {
+      margin-bottom: 32px;
+    }
+
+    .scope-number {
+      font-family: var(--font-en);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-vivid);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .scope-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    .scope-lead-text {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      line-height: 1.9;
+      max-width: 100%;
+    }
+
+    /* 空間デザイン用：2列グリッド（横長 16:10） */
+    .scope-gallery-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 36px;
+    }
+
+    /* 紙媒体用：3列グリッド（縦長 A4比率 1:1.414） */
+    .scope-gallery-grid-print {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px 24px;
+      margin-top: 36px;
+    }
+
+    .scope-card-item {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-white);
+    }
+
+    .scope-img-frame {
+      width: 100%;
+      overflow: hidden;
+      background: var(--bg-gray);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .aspect-landscape {
+      aspect-ratio: 16 / 10;
+    }
+
+    .aspect-print-vertical {
+      aspect-ratio: 1 / 1.414;
+    }
+
+    .scope-img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: var(--transition);
+    }
+
+    .scope-card-item:hover .scope-img-frame img {
+      transform: scale(1.03);
+    }
+
+    .scope-card-caption {
+      padding-top: 14px;
+    }
+
+    .scope-item-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .scope-item-desc {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+      イベント：縦動画 (3:4) ＋ 解説のバランス型 2カラムレイアウト
+    ========================================================= */
+    .event-showcase-split {
+      display: grid;
+      grid-template-columns: 380px 1fr; /* 3:4比率に合わせて横幅のバランスを最適化 */
+      gap: 56px;
+      align-items: center;
+      margin-top: 40px;
+      background: var(--bg-gray);
+      padding: 48px;
+      border: 1px solid var(--border-color);
+    }
+
+    .event-video-frame {
+      width: 100%;
+      aspect-ratio: 3 / 4; /* 3:4の縦長比率に設定 */
+      background: #000000;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .event-video-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .event-details-text {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .event-details-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    .event-details-desc {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      line-height: 2.0;
+    }
+
+    .event-highlight-points {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .event-highlight-points li {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.6;
+    }
+
+    .event-highlight-points li::before {
+      content: '■';
+      color: var(--accent-vivid);
+      font-size: 0.75rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 860px) {
+      .scope-gallery-grid-2,
+      .scope-gallery-grid-print {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .event-showcase-split {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 24px;
+      }
+      .event-video-frame {
+        max-width: 320px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ビビッドピンクカスタムカーソル -->
+  <div class="custom-cursor"></div>
+
+  <!-- ヘッダー -->
+  <header>
+    <div class="header-inner">
+      <a href="../index.html" class="logo">HIKARU HOSOBA<span>.</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="メニュー開閉">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../works.html" style="color: var(--text-main);">Works</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. 最上部：モックアップ全面 ＋ 右側にタイトル重ね表示 -->
+    <div class="detail-hero-full-wrap">
+      <div class="detail-hero-overlay-text fv-photo-slow-fade">
+        <span class="detail-overlay-sub">Total Branding & Creative Direction</span>
+        <h1 class="detail-overlay-title">ONECAGE<br>総合クリエイティブ</h1>
+      </div>
+
+      <!-- モックアップ -->
+      <div class="detail-mv-full-bg fv-photo-slow-fade">
+        <img src="../images/onecage-branding-mv.jpg" alt="ONECAGE 総合クリエイティブ メインモックアップ">
+      </div>
+    </div>
+
+    <!-- 2. 制作概要 Outline (面分けライトグレー背景) -->
+    <section class="section-block bg-gray outline-section fade-in-up">
+      <div class="section-container">
+        <div class="section-head">
+          <div>
+            <p class="section-sub-title">プロジェクト概要</p>
+            <h2 class="section-main-title">Outline</h2>
+          </div>
+        </div>
+
+        <p class="outline-item-body" style="font-size: 1.08rem; margin-bottom: 48px;">
+          室内野球練習場「ONECAGE」の事業立ち上げにおいて、クリエイティブディレクターとして参画。Webサイトだけでなく、外観・内装のデザインから名刺・チラシ等の紙媒体ツール、施工業者様との図面折衝、イベントの企画・運営、現場での顧客対応まで、ブランドに関わるすべての顧客接点を統括・推進しました。
+        </p>
+
+        <!-- ターゲット -->
+        <div class="outline-item-block">
+          <p class="outline-item-head">Target</p>
+          <p class="outline-item-body">
+            天候に左右されず集中して自主練習をしたい少年野球選手とその保護者、社会人プレーヤー、およびチーム・個人指導を行う野球指導者
+          </p>
+        </div>
+
+        <!-- 担当領域 -->
+        <div class="outline-item-block">
+          <p class="outline-item-head">Period & Role</p>
+          <p class="outline-item-body">
+            役割：クリエイティブディレクター<br>
+            担当領域：ブランド設計 / 空間デザイン / 施工業者折衝 / 各種コンテンツ・販促制作 / イベント企画・現場運営 / 予約システム管理など
+          </p>
+        </div>
+
+        <!-- 目的・ミッション -->
+        <div class="outline-item-block">
+          <p class="outline-item-head">Purpose</p>
+          <p class="outline-item-body">
+            従来のバッティングセンターのイメージを覆す「洗練された完全個室の野球練習空間」としてのブランドポジション確立、および実店舗・販促物・リアル体験の一貫したクオリティ担保による会員獲得
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. クリエイティブ領域別 詳細ギャラリー (白背景) -->
+    <section class="section-block bg-white fade-in-up">
+      <div class="section-container">
+        
+        <div class="section-head">
+          <div>
+            <p class="section-sub-title">ディレクション実績</p>
+            <h2 class="section-main-title">Branding Scope</h2>
+          </div>
+        </div>
+
+        <h3 class="detail-concept-catch">
+          「空間からグラフィック、現場体験まで」<br>
+          一貫した世界観でブランド価値を形にするトータルプロデュース。
+        </h3>
+
+        <!-- ================= SCOPE 01: 空間・店舗デザイン ================= -->
+        <div class="branding-scope-section">
+          <div class="scope-head">
+            <span class="scope-number">Scope 01 / Space & Exterior</span>
+            <h4 class="scope-title">外観・空間デザイン</h4>
+            <p class="scope-lead-text">
+              完全個室で集中できる練習環境を体現するため、ファサードデザインからカラーパレット、照明計画までディレクション。施工業者様と密に図面折衝を重ね、ブランドの空気感を実空間へと落とし込みました。
+            </p>
+          </div>
+
+          <div class="scope-gallery-grid-2">
+            <!-- 外観写真 -->
+            <div class="scope-card-item zoom-on-hover">
+              <div class="scope-img-frame aspect-landscape">
+                <img src="../images/onecage-exterior.png" alt="店舗外観・ファサードサイン" loading="lazy">
+              </div>
+              <div class="scope-card-caption">
+                <h5 class="scope-item-name">店舗外観・ファサードサイン</h5>
+                <p class="scope-item-desc">通りからの視認性とブランドの上質感を両立させたサイン・グラフィック設計。</p>
+              </div>
+            </div>
+
+            <!-- 内装写真 -->
+            <div class="scope-card-item zoom-on-hover">
+              <div class="scope-img-frame aspect-landscape">
+                <img src="../images/onecage-interior.png" alt="インドア練習ケージ・内装設計" loading="lazy">
+              </div>
+              <div class="scope-card-caption">
+                <h5 class="scope-item-name">インドア練習ケージ・内装設計</h5>
+                <p class="scope-item-desc">選手がプレーに没頭できるよう、無駄な装飾を削ぎ落としたモノトーン基調の練習空間。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SCOPE 02: グラフィック・販促ツール ================= -->
+        <div class="branding-scope-section">
+          <div class="scope-head">
+            <span class="scope-number">Scope 02 / Graphic & Print</span>
+            <h4 class="scope-title">紙媒体・ブランドツール展開</h4>
+            <p class="scope-lead-text">
+              名刺やショップカードから、チラシ、施設内の利用ルールサインなどを制作。
+            </p>
+          </div>
+
+          <div class="scope-gallery-grid-print">
+            <!-- 名刺（縦型） -->
+            <div class="scope-card-item zoom-on-hover">
+              <div class="scope-img-frame aspect-print-vertical">
+                <img src="../images/onecage-card.png" alt="名刺・ショップカード" loading="lazy">
+              </div>
+              <div class="scope-card-caption">
+                <h5 class="scope-item-name">名刺</h5>
+                <p class="scope-item-desc">ミニマルなロゴ配置と質感のある用紙でブランドの信頼感を表現。</p>
+              </div>
+            </div>
+
+            <!-- チラシ（表） -->
+            <div class="scope-card-item zoom-on-hover">
+              <div class="scope-img-frame aspect-print-vertical">
+                <img src="../images/onecage-post.png" alt="ポスティングチラシ" loading="lazy">
+              </div>
+              <div class="scope-card-caption">
+                <h5 class="scope-item-name">ポスティングチラシ</h5>
+                <p class="scope-item-desc">商圏内に5万部を配布。施設の認知向上と初回利用の促進を目的として、インパクトを重視して制作。</p>
+              </div>
+            </div>
+
+            <!-- チラシ（表） -->
+            <div class="scope-card-item zoom-on-hover">
+              <div class="scope-img-frame aspect-print-vertical">
+                <img src="../images/onecage-flyer.png" alt="新規スクール事業の告知用チラシ（店頭配布用）" loading="lazy">
+              </div>
+              <div class="scope-card-caption">
+                <h5 class="scope-item-name">新規スクール事業の告知チラシ（店頭配布用）</h5>
+                <p class="scope-item-desc">「確実に上達できる仕組み」を明確に伝え、月額プランへの入会を最大化。</p>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+        <!-- ================= SCOPE 03: イベント企画・現場運営 ================= -->
+        <div class="branding-scope-section">
+          <div class="scope-head">
+            <span class="scope-number">Scope 03 / Event</span>
+            <h4 class="scope-title">オープニング体験イベントの企画・運営</h4>
+            <p class="scope-lead-text">
+              デザインやツール制作にとどまらず、元プロ野球選手の指導を受けられる体験会を企画・運営。当日は現場に立ち、参加者の受付案内から直接のヒアリングまで対応しました。
+            </p>
+          </div>
+
+          <!-- 縦型動画と解説のバランス型スプリット表示 -->
+          <div class="event-showcase-split">
+            
+            <!-- 左：縦型動画 -->
+            <div class="event-video-frame">
+              <video controls playsinline preload="metadata" poster="../images/onecage-event-thumb.png">
+                <source src="../images/onecage-event.mp4" type="video/mp4">
+                お使いのブラウザは動画再生に対応していません。
+              </video>
+            </div>
+
+            <!-- 右：詳細解説テキスト -->
+            <div class="event-details-text">
+              <h5 class="event-details-title">
+                リアルな体験価値をつくり、<br>顧客の生の声からサービスを磨き込む。
+              </h5>
+              <p class="event-details-desc">
+                机上のブランディングで終わらせず、自ら現場オペレーションを統括。子どもたちが夢中でバットを振る姿や、保護者様が求める練習環境の条件を直接ヒアリングし、その後の予約導線やサービスの改善へと即座にフィードバックしました。
+              </p>
+              
+              <ul class="event-highlight-points">
+                <li>体験イベントの全体スケジュール設計と当日の進行統括</li>
+                <li>SNSでの告知や予約フォームへの流入導線の設計</li>
+                <li>保護者・指導者への直接ヒアリングによる課題抽出</li>
+                <li>イベント中の撮影ならびに撮影後の動画編集</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ページ下部ナビゲーション -->
+        <div class="detail-footer-nav">
+          <a href="../works.html" class="btn-link">&larr; Back to Works</a>
+          <a href="https://onecage.jp/" target="_blank" rel="noopener" class="btn-link">Visit ONECAGE Website ↗</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 全ページ共通 Contact Section -->
+    <section id="contact" class="contact-section fade-in-up">
+      <div class="section-container">
+        <p class="contact-thanks-msg">ご覧いただきありがとうございます。</p>
+        <div class="contact-large-bg-title">C O N T A C T</div>
+        <p class="contact-sub-text">お仕事のご相談やお問合せは、下記のメールアドレスよりお気軽にご連絡ください。</p>
+        <a href="#" id="contactBtn" class="contact-email-btn zoom-on-hover">
+          <span id="emailText"></span> <span class="arrow">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Hikaru Hosoba. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
