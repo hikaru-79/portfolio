@@ -18,14 +18,22 @@
       margin: 0 auto;
       padding: 120px 32px 40px;
       display: grid;
-      grid-template-columns: 1fr 480px;
-      gap: 48px;
+      grid-template-columns: 460px 1fr; /* 左を写真(460px)、右をテキスト(可変)に */
+      gap: 56px;
       align-items: center;
       position: relative;
     }
 
+    /* 写真を左（1列目）、テキストを右（2列目）に指定 */
+    .hero-photo-area-static {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
     .hero-title-area {
-      z-index: 2;
+      grid-column: 2;
+      grid-row: 1;
+      padding-left: 55px;
     }
 
     .hero-handwritten {
@@ -51,12 +59,10 @@
       width: 100%;
       height: 68vh;
       max-height: 580px;
-      border-radius: 8px;
       overflow: hidden;
       pointer-events: none;
       user-select: none;
       position: relative;
-      background-color: var(--bg-gray);
     }
 
     .hero-photo-area-static img {
@@ -276,11 +282,9 @@
         right: auto;
         width: 100%;
         height: auto;
-        aspect-ratio: 4 / 5; /* スマホで一番綺麗に見える縦長比率 */
+        aspect-ratio: 4 / 5;
         max-height: none;
-        border-radius: 0; /* 角丸をなくしてエッジの効いたモダンな印象に */
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
-        border: 1px solid rgba(0, 0, 0, 0.04);
+        border-radius: 0;
       }
 
       .hero-photo-area-static img {
@@ -347,7 +351,7 @@
 
     <!-- 写真エリア -->
     <div class="hero-photo-area-static fv-photo-slow-fade">
-      <img src="images/hero-photo.jpg" alt="Hikaru Hosoba メインビジュアル">
+      <img src="images/hero-photo.png" alt="Hikaru Hosoba メインビジュアル">
     </div>
   </div>
 
