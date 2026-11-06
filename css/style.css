@@ -654,7 +654,7 @@ footer {
     box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.1);
   }
   .outline-section {
-    margin-top: -100px;
+    padding: 60px 0;
   }
 }
 /* スマホ・タッチ端末で左上に残るカスタムカーソルを完全非表示 */
