@@ -120,11 +120,6 @@
       object-fit: cover;
       object-position: center top;
       display: block;
-      transition: transform 0.6s var(--ease-modern);
-    }
-
-    .works-slide-item:hover .works-slide-thumb img {
-      transform: scale(1.04);
     }
 
     .works-slide-overlay {
@@ -212,11 +207,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.6s var(--ease-modern);
-    }
-
-    .about-preview-photo:hover img {
-      transform: scale(1.04);
     }
 
     .about-preview-content {
@@ -239,66 +229,82 @@
     }
 
     @media (max-width: 768px) {
+      /* 1. FV全体：上下の縦並びレイアウトに変更 */
       .hero-layout {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 90px 16px 40px;
-        min-height: 82vh;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 100px 24px 32px;
+        min-height: auto; /* 不自然な全画面縛りを解除 */
         position: relative;
+        gap: 32px;
       }
 
-      .hero-photo-area-static {
-        position: absolute;
-        top: 80px;
-        left: 16px;
-        right: 16px;
-        width: calc(100% - 32px);
-        height: 72vh;
-        max-height: none;
-        border-radius: 16px;
-        z-index: 1;
-      }
-
-      .hero-photo-area-static::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.45);
-        border-radius: 16px;
-      }
-
+      /* 2. タイトルエリア：左寄せでエディトリアルに */
       .hero-title-area {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        padding: 40px 16px;
+        position: static;
+        z-index: 1;
+        text-align: left;
+        padding: 0;
+        width: 100%;
       }
 
       .hero-handwritten {
-        font-size: 2.2rem;
-        min-height: auto;
-        color: #111111;
-        text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+        font-size: 2.1rem;
+        line-height: 1.3;
+        min-height: 2.6em;
+        color: var(--text-main);
+        text-shadow: none; /* ボヤけた白影を削除 */
       }
 
       .hero-sub-text {
-        margin: 16px auto 0;
-        border-top-color: rgba(0, 0, 0, 0.2);
-        color: #333333;
+        margin: 16px 0 0;
+        border-top: 1px solid var(--border-color);
+        padding-top: 12px;
+        color: var(--text-sub);
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        width: 100%;
       }
 
+      /* 3. 写真エリア：文字と被らせず、下にシャープに配置 */
+      .hero-photo-area-static {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 5; /* スマホで一番綺麗に見える縦長比率 */
+        max-height: none;
+        border-radius: 0; /* 角丸をなくしてエッジの効いたモダンな印象に */
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+      }
+
+      .hero-photo-area-static img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+      }
+
+      /* 半透明オーバーレイは完全削除 */
+      .hero-photo-area-static::after {
+        display: none;
+      }
+
+      /* スライダー・Aboutプレビュー（既存の指定） */
       .works-slide-item {
         flex: 0 0 82vw;
         aspect-ratio: 16 / 10;
         height: auto;
       }
       .about-preview-grid { 
-        grid-template-columns: 1fr; gap: 32px; 
+        grid-template-columns: 1fr; 
+        gap: 32px; 
       }
     }
   </style>
@@ -366,7 +372,7 @@
             <!-- 01. ONECAGE 公式サイト -->
             <a href="works/onecage.html" class="works-slide-item zoom-on-hover">
               <div class="works-slide-thumb">
-                <img src="images/onecage-mv.jpg" alt="ONECAGE 公式サイト" loading="lazy">
+                <img src="images/onecage-thumb.jpg" alt="ONECAGE 公式サイト" loading="lazy">
               </div>
               <div class="works-slide-overlay">
                 <span class="works-slide-tag">Web Design / Coding</span>
@@ -375,9 +381,9 @@
             </a>
 
             <!-- 02. 神戸北野ノスタ -->
-            <a href="works/kitano-nosta.html" class="works-slide-item zoom-on-hover">
+            <a href="works/kobekitano.html" class="works-slide-item zoom-on-hover">
               <div class="works-slide-thumb">
-                <img src="images/nosta-mv.jpg" alt="神戸北野ノスタ 公式Webサイト" loading="lazy">
+                <img src="images/kobekitano-thumb.jpg" alt="神戸北野ノスタ 公式Webサイト" loading="lazy">
               </div>
               <div class="works-slide-overlay">
                 <span class="works-slide-tag">Web Design / Coding</span>
@@ -388,7 +394,7 @@
             <!-- 03. BASEBALL LABO -->
             <a href="works/baseball-labo.html" class="works-slide-item zoom-on-hover">
               <div class="works-slide-thumb">
-                <img src="images/labo-mv.jpg" alt="BASEBALL LABO ランディングページ" loading="lazy">
+                <img src="images/labo-thumb.jpg" alt="BASEBALL LABO ランディングページ" loading="lazy">
               </div>
               <div class="works-slide-overlay">
                 <span class="works-slide-tag">LP Design / Coding</span>
@@ -399,7 +405,7 @@
             <!-- 04. SYB ティザー -->
             <a href="works/syb-teaser.html" class="works-slide-item zoom-on-hover">
               <div class="works-slide-thumb">
-                <img src="images/syb-teaser-mv.jpg" alt="SYB KOBE ティザーサイト" loading="lazy">
+                <img src="images/syb-teaser-thumb.jpg" alt="SYB KOBE ティザーサイト" loading="lazy">
               </div>
               <div class="works-slide-overlay">
                 <span class="works-slide-tag">Web Design / Coding</span>
@@ -410,7 +416,7 @@
             <!-- 05. ECサイト プロジェクト -->
             <a href="works/ec-project.html" class="works-slide-item zoom-on-hover">
               <div class="works-slide-thumb">
-                <img src="images/ec-project-mv.jpg" alt="ECサイト 企画・開発プロジェクト" loading="lazy">
+                <img src="images/ec-project-thumb.jpg" alt="ECサイト 企画・開発プロジェクト" loading="lazy">
               </div>
               <div class="works-slide-overlay">
                 <span class="works-slide-tag">EC Design / promotion</span>
@@ -421,7 +427,7 @@
             <!-- 06. ONECAGE 総合クリエイティブ -->
             <a href="works/onecage-branding.html" class="works-slide-item zoom-on-hover">
               <div class="works-slide-thumb">
-                <img src="images/onecage-branding-mv.jpg" alt="ONECAGE 総合クリエイティブ" loading="lazy">
+                <img src="images/onecage-branding-thumb.jpg" alt="ONECAGE 総合クリエイティブ" loading="lazy">
               </div>
               <div class="works-slide-overlay">
                 <span class="works-slide-tag">Creative Direction</span>
@@ -499,7 +505,7 @@
 
       if (!track) return;
 
-      // 矢印ボタンをクリックしたときの快適なスクロール（カード幅500px + gap28px = 528px 移動）
+      // 矢印ボタンクリック時のスクロール（カード幅500px + gap28px = 528px）
       if (prevBtn) {
         prevBtn.addEventListener('click', () => {
           track.scrollBy({ left: -528, behavior: 'smooth' });

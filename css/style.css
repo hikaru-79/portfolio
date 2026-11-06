@@ -221,7 +221,7 @@ nav a:hover {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 48px;
+  margin-bottom: 35px;
 }
 
 .section-sub-title {
@@ -357,8 +357,12 @@ footer {
     align-items: center;
     gap: 20px;
   }
-  .section-container { padding: 0 20px; }
-  .section-block { padding: 80px 0; }
+  .section-container { 
+    padding: 0 20px;
+  }
+  .section-block {
+     padding: 50px 0;
+  }
 }
 
 /* =========================================================
@@ -622,7 +626,7 @@ footer {
     position: relative;
     top: auto;
     right: auto;
-    padding: 0 24px 32px;
+    padding: 0 24px;
     width: 100%;
   }
 
@@ -649,15 +653,18 @@ footer {
     aspect-ratio: 16 / 10;
     box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.1);
   }
+  .outline-section {
+    margin-top: -100px;
+  }
 }
-/* 1. スマホ・タッチ端末で左上に残るカスタムカーソルを完全非表示 */
+/* スマホ・タッチ端末で左上に残るカスタムカーソルを完全非表示 */
 @media (hover: none) and (pointer: coarse), (max-width: 768px) {
   .custom-cursor {
-    display: none !important;
+    display: none!important;
   }
 }
 
-/* 2. スマホ表示で「CONTACT」の背景巨大文字がはみ出さないよう字間とサイズを調整 */
+/* スマホ表示サイズ調整 */
 @media (max-width: 768px) {
   .contact-large-bg-title {
     font-size: clamp(2.4rem, 11vw, 3.6rem); 
@@ -666,5 +673,11 @@ footer {
     width: 100%;
     overflow: hidden;
     text-overflow: clip;
+  }
+  /* 詳細ページのMV画像枠 */
+  .detail-mv-full-bg img,
+  .detail-hero-full-wrap img,
+  .detail-mv-img-box img {
+    object-position: 25% center!important;
   }
 }
